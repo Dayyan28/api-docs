@@ -17,12 +17,19 @@ const navigation: NavItem[] = [
     ]
   },
   {
+    id: 'authentication',
+    title: 'Authentication',
+    children: [
+      { id: 'auth-overview', title: 'Overview' },
+      { id: 'auth-tokens', title: 'Tokens' }
+    ]
+  },
+  {
     id: 'endpoints',
     title: 'Endpoints',
     children: [
-      { id: 'authentication', title: 'Authentication' },
       { id: 'users', title: 'Users' },
-      { id: 'tokens', title: 'Tokens' }
+      { id: 'transactions', title: 'Transactions' }
     ]
   }
 ];

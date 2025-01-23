@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import CVSDocsPage from "./pages/docs/CVSDocsPage";
+import POSDocsPage from "./pages/docs/POSDocsPage";
 
 const queryClient = new QueryClient();
 
@@ -16,8 +18,9 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            {/* Documentation routes will be added here */}
-            <Route path="/docs/*" element={<div>Documentation pages coming soon</div>} />
+            <Route path="/docs/cvs" element={<CVSDocsPage />} />
+            <Route path="/docs/pos" element={<POSDocsPage />} />
+            <Route path="/docs/*" element={<div>Documentation page coming soon</div>} />
           </Routes>
         </BrowserRouter>
       </div>
