@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
+export interface DocsSidebarProps {
+  activeSection: string;
+  onSectionClick: (sectionId: string) => void;
+}
+
 interface NavItem {
   id: string;
   title: string;
@@ -33,11 +38,6 @@ const navigation: NavItem[] = [
     ]
   }
 ];
-
-interface DocsSidebarProps {
-  activeSection: string;
-  onSectionClick: (sectionId: string) => void;
-}
 
 export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps) => {
   const [expanded, setExpanded] = useState<string[]>(['guides', 'endpoints']);
@@ -75,9 +75,11 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
         ) : (
           <button
             onClick={() => onSectionClick(item.id)}
-            className={`nav-item w-full text-left ${
-              activeSection === item.id ? 'active' : ''
-            }`}
+            className={`w-full text-left px-4 py-2 text-sm ${
+              activeSection === item.id 
+                ? 'text-white bg-primary-teal'
+                : 'text-gray-400 hover:text-white'
+            } transition-colors`}
           >
             {item.title}
           </button>
@@ -87,7 +89,7 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
   };
 
   return (
-    <nav className="w-64 h-screen overflow-y-auto px-4 py-6 border-r border-gray-800">
+    <nav className="w-64 h-screen overflow-y-auto px-4 py-6 border-r border-secondary-teal">
       <div className="mb-8">
         <h1 className="text-xl font-bold text-white mb-1">API Docs</h1>
         <p className="text-sm text-gray-400">v1.0.0</p>
