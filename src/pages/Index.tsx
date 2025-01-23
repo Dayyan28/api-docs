@@ -1,112 +1,77 @@
-import { useState, useEffect, useRef } from 'react';
-import { DocsSidebar } from '../components/DocsSidebar';
-import { CodeBlock } from '../components/CodeBlock';
+import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
-const sections = [
+const documentationSections = [
   {
-    id: 'introduction',
-    title: 'Introduction',
-    content: `
-      <h1 class="text-3xl font-bold mb-6">Introduction</h1>
-      <p class="mb-4">Welcome to our API documentation. This guide will help you get started with integrating our API into your applications.</p>
-      <p class="mb-4">Our API uses REST architecture and returns responses in JSON format. All requests must be made over HTTPS.</p>
-    `,
-    code: {
-      method: 'GET',
-      endpoint: '/api/v1/status',
-      response: `{
-  "status": "ok",
-  "version": "1.0.0"
-}`
-    }
+    title: "Coupon | Vouchers & Giftcards",
+    description: "Documentation for the CVS API including vouchers and gift cards management.",
+    path: "/docs/cvs",
+    icon: "🎁"
   },
   {
-    id: 'authentication',
-    title: 'Authentication',
-    content: `
-      <h1 class="text-3xl font-bold mb-6">Authentication</h1>
-      <p class="mb-4">To authenticate your requests, include your API key in the Authorization header:</p>
-      <pre class="mb-4">Authorization: Bearer YOUR_API_KEY</pre>
-      <p class="mb-4">You can obtain an API key from your dashboard settings page.</p>
-    `,
-    code: {
-      method: 'POST',
-      endpoint: '/api/v1/auth',
-      request: `{
-  "api_key": "your-api-key"
-}`,
-      response: `{
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "expires_in": 3600
-}`
-    }
+    title: "Point of Sale",
+    description: "Integration guide for Point of Sale (POS) systems.",
+    path: "/docs/pos",
+    icon: "🏪"
+  },
+  {
+    title: "eCommerce",
+    description: "Quick start guide and API reference for retailers and merchants.",
+    path: "/docs/ecommerce",
+    icon: "🛍️"
+  },
+  {
+    title: "Value Store Provider",
+    description: "Overview and integration guide for Value Store Provider (VSP).",
+    path: "/docs/vsp",
+    icon: "💳"
+  },
+  {
+    title: "Loyalty",
+    description: "Documentation for loyalty program integration.",
+    path: "/docs/loyalty",
+    icon: "⭐"
+  },
+  {
+    title: "Earn Gateway",
+    description: "Implementation guide for the Earn Gateway system.",
+    path: "/docs/earn",
+    icon: "💰"
   }
 ];
 
 const Index = () => {
-  const [activeSection, setActiveSection] = useState('introduction');
-  const [visibleCodeBlock, setVisibleCodeBlock] = useState('introduction');
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    if (!contentRef.current) return;
-
-    const scrollPosition = window.scrollY + 100;
-    const sectionElements = contentRef.current.children;
-
-    for (let i = 0; i < sectionElements.length; i++) {
-      const section = sectionElements[i] as HTMLElement;
-      const sectionTop = section.offsetTop;
-      const sectionBottom = sectionTop + section.offsetHeight;
-
-      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-        const sectionId = section.id;
-        setActiveSection(sectionId);
-        setVisibleCodeBlock(sectionId);
-        break;
-      }
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      window.scrollTo({
-        top: section.offsetTop - 20,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
-    <div className="flex min-h-screen bg-docsbg text-white">
-      <DocsSidebar activeSection={activeSection} onSectionClick={scrollToSection} />
-      
-      <main className="flex-1 max-w-3xl px-8 py-6" ref={contentRef}>
-        {sections.map(section => (
-          <section
-            key={section.id}
-            id={section.id}
-            className="mb-16"
-            dangerouslySetInnerHTML={{ __html: section.content }}
-          />
-        ))}
-      </main>
-
-      <div className="w-96 p-6">
-        <div className="sticky-sidebar">
-          {sections.map(section => (
-            <div key={section.id} className="mb-6">
-              <CodeBlock
-                {...section.code}
-                isVisible={visibleCodeBlock === section.id}
-              />
-            </div>
+    <div className="min-h-screen bg-primary-dark-teal">
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold text-secondary-cream mb-4">
+            API Documentation
+          </h1>
+          <p className="text-secondary-blue text-lg max-w-2xl mx-auto">
+            Choose a section below to explore our comprehensive API documentation and integration guides.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {documentationSections.map((section) => (
+            <Link 
+              key={section.path} 
+              to={section.path}
+              className="transform transition-transform hover:scale-105"
+            >
+              <Card className="h-full bg-deep-teal border-secondary-teal hover:border-primary-orange transition-colors duration-300">
+                <div className="p-6">
+                  <div className="text-4xl mb-4">{section.icon}</div>
+                  <h2 className="text-xl font-semibold text-secondary-cream mb-2">
+                    {section.title}
+                  </h2>
+                  <p className="text-secondary-blue">
+                    {section.description}
+                  </p>
+                </div>
+              </Card>
+            </Link>
           ))}
         </div>
       </div>

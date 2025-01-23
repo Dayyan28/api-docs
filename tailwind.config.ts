@@ -19,6 +19,15 @@ export default {
     },
     extend: {
       colors: {
+        // Primary Colors
+        'primary-orange': '#FF5732',
+        'primary-dark-teal': '#00313C',
+        // Secondary Colors
+        'secondary-teal': '#085A65',
+        'secondary-blue': '#73B4BC',
+        'secondary-cream': '#F1EDE4',
+        // Additional Colors
+        'deep-teal': '#001923',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
