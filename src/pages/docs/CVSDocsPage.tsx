@@ -1,49 +1,58 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
+import { MarkdownRenderer } from '@/components/MarkdownRenderer';
+import { loadMarkdownFile } from '@/utils/markdown';
 import { CodeBlock } from '@/components/CodeBlock';
 
 const CVSDocsPage = () => {
-  const [activeSection, setActiveSection] = useState('introduction');
+  const [content, setContent] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      setIsLoading(true);
+      try {
+        // This path should point to your markdown file in the public directory
+        const markdownContent = await loadMarkdownFile('/docs/cvs/index.md');
+        setContent(markdownContent);
+      } catch (error) {
+        console.error('Failed to load documentation:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
 
   return (
     <div className="flex">
-      <DocsSidebar 
-        activeSection={activeSection} 
-        onSectionClick={setActiveSection} 
-      />
+      <DocsSidebar />
       <main className="flex-1 p-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Coupon | Vouchers & Giftcards</h1>
-          
-          <section id="introduction" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
-            <p className="text-gray-300 mb-4">
-              The CVS API provides comprehensive endpoints for managing coupons, vouchers, and gift cards.
-            </p>
-          </section>
-
-          <section id="authentication" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Authentication</h2>
-            <p className="text-gray-300 mb-4">
-              All API endpoints require authentication using Bearer tokens.
-            </p>
-          </section>
-        </div>
+        <MarkdownRenderer content={content} />
       </main>
-      <aside className="w-80 p-6 border-l border-gray-800">
-        <CodeBlock
-          method="POST"
-          endpoint="/api/v1/auth"
-          request={`{
-  "clientId": "your-client-id",
-  "clientSecret": "your-client-secret"
+      <aside className="w-96 p-6 border-l border-secondary-teal">
+        <div className="sticky-sidebar">
+          <CodeBlock
+            method="GET"
+            endpoint="/api/v1/example"
+            request={`{
+  "key": "value"
 }`}
-          response={`{
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "expiresIn": 3600
+            response={`{
+  "success": true,
+  "data": {
+    "id": "123",
+    "status": "active"
+  }
 }`}
-          isVisible={activeSection === 'authentication'}
-        />
+            isVisible={true}
+          />
+        </div>
       </aside>
     </div>
   );
