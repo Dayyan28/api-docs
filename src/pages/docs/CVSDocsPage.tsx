@@ -7,6 +7,7 @@ import { CodeBlock } from '@/components/CodeBlock';
 const CVSDocsPage = () => {
   const [content, setContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState('introduction');
 
   useEffect(() => {
     const loadContent = async () => {
@@ -25,13 +26,30 @@ const CVSDocsPage = () => {
     loadContent();
   }, []);
 
+  const handleSectionClick = (sectionId: string) => {
+    setActiveSection(sectionId);
+    // Here you can add logic to load different markdown files based on the section
+    const loadSectionContent = async () => {
+      try {
+        const markdownContent = await loadMarkdownFile(`/docs/cvs/${sectionId}.md`);
+        setContent(markdownContent);
+      } catch (error) {
+        console.error(`Failed to load section ${sectionId}:`, error);
+      }
+    };
+    loadSectionContent();
+  };
+
   if (isLoading) {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
   }
 
   return (
     <div className="flex">
-      <DocsSidebar />
+      <DocsSidebar 
+        activeSection={activeSection}
+        onSectionClick={handleSectionClick}
+      />
       <main className="flex-1 p-8">
         <MarkdownRenderer content={content} />
       </main>
