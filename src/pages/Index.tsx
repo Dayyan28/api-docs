@@ -63,8 +63,9 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-primary-dark-teal/90 to-deep-teal/90" />
           <img
             src="/hero-background.jpg"
-            alt="Hero background"
+            alt=""
             className="w-full h-full object-cover"
+            aria-hidden="true"
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
@@ -72,7 +73,7 @@ const Index = () => {
             <motion.img
               src="/logo.png"
               alt="YoYo Group Logo"
-              className="mx-auto mb-8 h-24" // Increased logo size
+              className="mx-auto mb-8 h-32" // Increased logo size further
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
