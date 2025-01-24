@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const documentationSections = [
   {
@@ -43,35 +44,72 @@ const documentationSections = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-primary-dark-teal">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-secondary-cream mb-4">
-            API Documentation
-          </h1>
-          <p className="text-secondary-blue text-lg max-w-2xl mx-auto">
-            Choose a section below to explore our comprehensive API documentation and integration guides.
-          </p>
+      {/* Hero Section */}
+      <div className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/hero-background.jpg"
+            alt="Hero background"
+            className="w-full h-full object-cover opacity-20"
+          />
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {documentationSections.map((section) => (
-            <Link 
-              key={section.path} 
-              to={section.path}
-              className="transform transition-transform hover:scale-105"
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <motion.img
+              src="/logo.png"
+              alt="YoYo Group Logo"
+              className="mx-auto mb-8 h-16"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            />
+            <motion.h1
+              className="text-5xl font-bold text-secondary-cream mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Card className="h-full bg-deep-teal border-secondary-teal hover:border-primary-orange transition-colors duration-300">
-                <div className="p-6">
-                  <div className="text-4xl mb-4">{section.icon}</div>
-                  <h2 className="text-xl font-semibold text-secondary-cream mb-2">
-                    {section.title}
-                  </h2>
-                  <p className="text-secondary-blue">
-                    {section.description}
-                  </p>
-                </div>
-              </Card>
-            </Link>
+              API Documentation
+            </motion.h1>
+            <motion.p
+              className="text-secondary-blue text-xl max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Explore our comprehensive API documentation and integration guides
+            </motion.p>
+          </div>
+        </div>
+      </div>
+
+      {/* Documentation Cards Section */}
+      <div className="container mx-auto px-4 py-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {documentationSections.map((section, index) => (
+            <motion.div
+              key={section.path}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <Link 
+                to={section.path}
+                className="block transform transition-all duration-300 hover:scale-105"
+              >
+                <Card className="h-full bg-deep-teal border-secondary-teal hover:border-primary-orange transition-colors duration-300">
+                  <div className="p-8">
+                    <div className="text-4xl mb-6">{section.icon}</div>
+                    <h2 className="text-2xl font-semibold text-secondary-cream mb-4">
+                      {section.title}
+                    </h2>
+                    <p className="text-secondary-blue text-lg">
+                      {section.description}
+                    </p>
+                  </div>
+                </Card>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

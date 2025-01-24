@@ -13,8 +13,7 @@ const CVSDocsPage = () => {
     const loadContent = async () => {
       setIsLoading(true);
       try {
-        // This path should point to your markdown file in the public directory
-        const markdownContent = await loadMarkdownFile('/docs/cvs/index.md');
+        const markdownContent = await loadMarkdownFile(`/docs/cvs/${activeSection}.md`);
         setContent(markdownContent);
       } catch (error) {
         console.error('Failed to load documentation:', error);
@@ -24,11 +23,10 @@ const CVSDocsPage = () => {
     };
 
     loadContent();
-  }, []);
+  }, [activeSection]);
 
   const handleSectionClick = (sectionId: string) => {
     setActiveSection(sectionId);
-    // Here you can add logic to load different markdown files based on the section
   };
 
   if (isLoading) {
