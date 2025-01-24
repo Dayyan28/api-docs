@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, DollarSign, Store, CreditCard, Star, PieChart } from "lucide-react";
+import { Heart, DollarSign, Store, CreditCard, Star, PieChart, Facebook, Linkedin, Instagram } from "lucide-react";
 
 const documentationSections = [
   {
@@ -77,50 +77,55 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              API Documentation
+              Delight in every connection
             </motion.h1>
             <motion.p
-              className="text-xl text-secondary-blue max-w-2xl mx-auto"
+              className="text-xl text-secondary-blue max-w-4xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Explore our comprehensive API documentation and integration guides
+              Unlock the full potential of our platform with detailed API documentation and step-by-step integration guides. 
+              Whether you're building custom applications, automating workflows, or scaling your solutions, 
+              our resources provide everything you need to get started quickly and seamlessly.
             </motion.p>
           </div>
         </div>
       </div>
 
       {/* Documentation Cards Section */}
-      <div className="container mx-auto px-4 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {documentationSections.map((section, index) => (
-            <motion.div
-              key={section.path}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <Link 
-                to={section.path}
-                className="block transform transition-all duration-300 hover:scale-105"
+      <div className="bg-white py-24">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {documentationSections.map((section, index) => (
+              <motion.div
+                key={section.path}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="h-full"
               >
-                <Card className={`h-full bg-white/95 border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.bgColor}`}>
-                  <div className="p-8">
-                    <div className="mb-6 text-primary-orange">
-                      {<section.icon size={40} />}
+                <Link 
+                  to={section.path}
+                  className="block h-full transform transition-all duration-300 hover:scale-105"
+                >
+                  <Card className={`h-full bg-primary-dark-teal border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.bgColor}`}>
+                    <div className="p-8 h-full flex flex-col">
+                      <div className="mb-6 text-white">
+                        {<section.icon size={40} />}
+                      </div>
+                      <h2 className="text-2xl font-semibold text-white mb-4">
+                        {section.title}
+                      </h2>
+                      <p className="text-white text-lg">
+                        {section.description}
+                      </p>
                     </div>
-                    <h2 className="text-2xl font-semibold text-primary-dark-teal mb-4">
-                      {section.title}
-                    </h2>
-                    <p className="text-secondary-teal text-lg">
-                      {section.description}
-                    </p>
-                  </div>
-                </Card>
-              </Link>
-            </motion.div>
-          ))}
+                  </Card>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -146,20 +151,24 @@ const Index = () => {
             <div>
               <h3 className="font-semibold mb-4">Company</h3>
               <ul className="space-y-2 text-secondary-blue">
-                <li>About Us</li>
-                <li>Careers</li>
-                <li>Contact</li>
-                <li>Blog</li>
+                <li><a href="https://yoyogroup.com/about/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-orange">About Us</a></li>
+                <li><a href="https://yoyogroup.com/careers/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-orange">Careers</a></li>
+                <li><a href="https://yoyogroup.com/contact/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-orange">Contact</a></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-4">Connect</h3>
-              <ul className="space-y-2 text-secondary-blue">
-                <li>Twitter</li>
-                <li>LinkedIn</li>
-                <li>Facebook</li>
-                <li>Instagram</li>
-              </ul>
+              <div className="flex space-x-4">
+                <a href="https://www.facebook.com/theyoyogroup.international" target="_blank" rel="noopener noreferrer" className="text-secondary-blue hover:text-primary-orange">
+                  <Facebook size={24} />
+                </a>
+                <a href="https://www.linkedin.com/company/the-yoyo-group/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="text-secondary-blue hover:text-primary-orange">
+                  <Linkedin size={24} />
+                </a>
+                <a href="https://www.instagram.com/theyoyogroup/" target="_blank" rel="noopener noreferrer" className="text-secondary-blue hover:text-primary-orange">
+                  <Instagram size={24} />
+                </a>
+              </div>
             </div>
           </div>
           <div className="border-t border-secondary-teal/20 mt-12 pt-8 text-center text-secondary-blue">
