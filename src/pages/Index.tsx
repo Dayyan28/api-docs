@@ -9,42 +9,48 @@ const documentationSections = [
     description: "Documentation for the CVS API including vouchers and gift cards management.",
     path: "/docs/cvs",
     icon: DollarSign,
-    bgColor: "bg-secondary-cream/10"
+    bgColor: "bg-secondary-cream/20",
+    cardBg: "bg-primary-dark-teal/90"
   },
   {
     title: "Point of Sale",
     description: "Integration guide for Point of Sale (POS) systems.",
     path: "/docs/pos",
     icon: Store,
-    bgColor: "bg-secondary-teal/10"
+    bgColor: "bg-secondary-teal/20",
+    cardBg: "bg-primary-dark-teal/90"
   },
   {
     title: "eCommerce",
     description: "Quick start guide and API reference for retailers and merchants.",
     path: "/docs/ecommerce",
     icon: Heart,
-    bgColor: "bg-secondary-blue/10"
+    bgColor: "bg-secondary-blue/20",
+    cardBg: "bg-primary-dark-teal/90"
   },
   {
     title: "Value Store Provider",
     description: "Overview and integration guide for Value Store Provider (VSP).",
     path: "/docs/vsp",
     icon: CreditCard,
-    bgColor: "bg-primary-orange/10"
+    bgColor: "bg-primary-orange/20",
+    cardBg: "bg-primary-dark-teal/90"
   },
   {
     title: "Loyalty",
     description: "Documentation for loyalty program integration.",
     path: "/docs/loyalty",
     icon: Star,
-    bgColor: "bg-secondary-cream/10"
+    bgColor: "bg-secondary-cream/20",
+    cardBg: "bg-primary-dark-teal/90"
   },
   {
     title: "Earn Gateway",
     description: "Implementation guide for the Earn Gateway system.",
     path: "/docs/earn",
     icon: PieChart,
-    bgColor: "bg-secondary-teal/10"
+    bgColor: "bg-secondary-teal/20",
+    cardBg: "bg-primary-dark-teal/90"
   }
 ];
 
@@ -66,7 +72,7 @@ const Index = () => {
             <motion.img
               src="/logo.png"
               alt="YoYo Group Logo"
-              className="mx-auto mb-8 h-16"
+              className="mx-auto mb-8 h-24" // Increased logo size
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -109,15 +115,15 @@ const Index = () => {
                   to={section.path}
                   className="block h-full transform transition-all duration-300 hover:scale-105"
                 >
-                  <Card className={`h-full bg-primary-dark-teal border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.bgColor}`}>
+                  <Card className={`h-full ${section.cardBg} border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.bgColor}`}>
                     <div className="p-8 h-full flex flex-col">
-                      <div className="mb-6 text-white">
+                      <div className="mb-6 text-secondary-cream">
                         {<section.icon size={40} />}
                       </div>
-                      <h2 className="text-2xl font-semibold text-white mb-4">
+                      <h2 className="text-2xl font-semibold text-secondary-cream mb-4">
                         {section.title}
                       </h2>
-                      <p className="text-white text-lg">
+                      <p className="text-secondary-blue text-lg">
                         {section.description}
                       </p>
                     </div>
@@ -142,10 +148,10 @@ const Index = () => {
             <div>
               <h3 className="font-semibold mb-4">Products</h3>
               <ul className="space-y-2 text-secondary-blue">
-                <li>CVS</li>
-                <li>POS Integration</li>
-                <li>VSP</li>
-                <li>Loyalty</li>
+                <li><Link to="/docs/cvs" className="hover:text-primary-orange">CVS</Link></li>
+                <li><Link to="/docs/pos" className="hover:text-primary-orange">POS Integration</Link></li>
+                <li><Link to="/docs/vsp" className="hover:text-primary-orange">VSP</Link></li>
+                <li><Link to="/docs/loyalty" className="hover:text-primary-orange">Loyalty</Link></li>
               </ul>
             </div>
             <div>

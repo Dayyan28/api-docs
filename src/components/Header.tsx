@@ -7,13 +7,13 @@ export const Header = () => {
 
   return showHomeButton ? (
     <header className="bg-deep-teal border-b border-secondary-teal">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="container mx-auto px-4 py-3">
         <Link 
           to="/" 
-          className="flex items-center gap-2 text-secondary-cream hover:text-primary-orange transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-teal/10 text-secondary-cream hover:bg-secondary-teal/20 transition-colors"
         >
           <Home className="w-5 h-5" />
-          <span>Back to Documentation Home</span>
+          <span className="font-medium">Back to Documentation Home</span>
         </Link>
       </div>
     </header>
