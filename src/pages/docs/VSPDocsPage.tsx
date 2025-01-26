@@ -1,39 +1,42 @@
-import { useState } from 'react';
-import { DocsSidebar } from '@/components/DocsSidebar';
-import { CodeBlock } from '@/components/CodeBlock';
+import { useEffect, useState } from 'react';
+import { MarkdownRenderer } from '@/components/MarkdownRenderer';
+import { loadMarkdownFile } from '@/utils/markdown';
 
 const VSPDocsPage = () => {
-  const [activeSection, setActiveSection] = useState('introduction');
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        // Load overview content first
+        const overviewContent = await loadMarkdownFile('/docs/vsp/_vsp.md');
+        
+        // Load additional content
+        const modelsContent = await loadMarkdownFile('/docs/vsp/_vsp_models.md');
+        const transactionsContent = await loadMarkdownFile('/docs/vsp/_vsp_transactions.md');
+        
+        // Combine content in desired order
+        const combinedContent = [
+          overviewContent,
+          modelsContent,
+          transactionsContent
+        ].join('\n\n');
+        
+        setContent(combinedContent);
+      } catch (error) {
+        console.error('Error loading markdown content:', error);
+        setContent('# Error\nFailed to load documentation content.');
+      }
+    };
+
+    loadContent();
+  }, []);
 
   return (
-    <div className="flex">
-      <DocsSidebar 
-        activeSection={activeSection} 
-        onSectionClick={setActiveSection} 
-      />
-      <main className="flex-1 p-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Value Store Provider (VSP)</h1>
-          
-          <section id="introduction" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Overview</h2>
-            <p className="text-gray-300 mb-4">
-              Learn about Value Store Provider integration and implementation.
-            </p>
-          </section>
-        </div>
-      </main>
-      <aside className="w-80 p-6 border-l border-gray-800">
-        <CodeBlock
-          method="GET"
-          endpoint="/api/v1/vsp/status"
-          response={`{
-  "status": "active",
-  "provider": "VSP"
-}`}
-          isVisible={activeSection === 'introduction'}
-        />
-      </aside>
+    <div className="container mx-auto px-4 py-8">
+      <div className="prose prose-invert max-w-none">
+        <MarkdownRenderer content={content} />
+      </div>
     </div>
   );
 };

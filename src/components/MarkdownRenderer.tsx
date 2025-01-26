@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils';
 import { Copy } from 'lucide-react';
 import { useState } from 'react';
-import { Components } from 'react-markdown';
+import type { Components } from 'react-markdown';
 
 interface MarkdownRendererProps {
   content: string;
@@ -39,11 +39,15 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
               <button
                 onClick={() => handleCopy(String(children), codeIndex)}
                 className="absolute right-2 top-2 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
+                aria-label="Copy code"
               >
-                <Copy size={16} className={cn(
-                  "text-gray-400",
-                  copiedIndex === codeIndex && "text-green-500"
-                )} />
+                <Copy 
+                  size={16} 
+                  className={cn(
+                    "text-gray-400",
+                    copiedIndex === codeIndex && "text-green-500"
+                  )} 
+                />
               </button>
               <pre className="p-4 overflow-x-auto">
                 <code className={className} {...props}>
@@ -56,7 +60,7 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
       }
 
       return (
-        <code className={className} {...props}>
+        <code className={cn("bg-codebg text-codefg px-2 py-1 rounded", className)} {...props}>
           {children}
         </code>
       );

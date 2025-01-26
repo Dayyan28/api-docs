@@ -1,46 +1,44 @@
-import { useState } from 'react';
-import { DocsSidebar } from '@/components/DocsSidebar';
-import { CodeBlock } from '@/components/CodeBlock';
+import { useEffect, useState } from 'react';
+import { MarkdownRenderer } from '@/components/MarkdownRenderer';
+import { loadMarkdownFile } from '@/utils/markdown';
 
 const POSDocsPage = () => {
-  const [activeSection, setActiveSection] = useState('introduction');
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        // Load overview content first
+        const overviewContent = await loadMarkdownFile('/docs/pos/_pos_overview.md');
+        
+        // Load additional content
+        const historyContent = await loadMarkdownFile('/docs/pos/_pos_history.md');
+        const transactionContent = await loadMarkdownFile('/docs/pos/_pos_transaction.md');
+        const refundContent = await loadMarkdownFile('/docs/pos/_pos_refund.md');
+        
+        // Combine content in desired order
+        const combinedContent = [
+          overviewContent,
+          historyContent,
+          transactionContent,
+          refundContent
+        ].join('\n\n');
+        
+        setContent(combinedContent);
+      } catch (error) {
+        console.error('Error loading markdown content:', error);
+        setContent('# Error\nFailed to load documentation content.');
+      }
+    };
+
+    loadContent();
+  }, []);
 
   return (
-    <div className="flex">
-      <DocsSidebar 
-        activeSection={activeSection} 
-        onSectionClick={setActiveSection} 
-      />
-      <main className="flex-1 p-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Point of Sale (POS)</h1>
-          
-          <section id="introduction" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
-            <p className="text-gray-300 mb-4">
-              The POS API enables integration with point of sale systems.
-            </p>
-          </section>
-
-          <section id="getting-started" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Getting Started</h2>
-            <p className="text-gray-300 mb-4">
-              Learn how to integrate the POS API with your system.
-            </p>
-          </section>
-        </div>
-      </main>
-      <aside className="w-80 p-6 border-l border-gray-800">
-        <CodeBlock
-          method="GET"
-          endpoint="/api/v1/pos/status"
-          response={`{
-  "status": "active",
-  "version": "1.0.0"
-}`}
-          isVisible={activeSection === 'getting-started'}
-        />
-      </aside>
+    <div className="container mx-auto px-4 py-8">
+      <div className="prose prose-invert max-w-none">
+        <MarkdownRenderer content={content} />
+      </div>
     </div>
   );
 };

@@ -8,9 +8,23 @@ const CVSDocsPage = () => {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        // Load content from the new directory structure
-        const markdownContent = await loadMarkdownFile('/docs/cvs/_cvs_overview.md');
-        setContent(markdownContent);
+        // Load overview content first
+        const overviewContent = await loadMarkdownFile('/docs/cvs/_cvs_overview.md');
+        
+        // Load additional content
+        const campaignsContent = await loadMarkdownFile('/docs/cvs/_cvs_campaigns.md');
+        const couponsContent = await loadMarkdownFile('/docs/cvs/_cvs_coupons.md');
+        const giftcardsContent = await loadMarkdownFile('/docs/cvs/_cvs_giftcards.md');
+        
+        // Combine content in desired order
+        const combinedContent = [
+          overviewContent,
+          campaignsContent,
+          couponsContent,
+          giftcardsContent
+        ].join('\n\n');
+        
+        setContent(combinedContent);
       } catch (error) {
         console.error('Error loading markdown content:', error);
         setContent('# Error\nFailed to load documentation content.');
