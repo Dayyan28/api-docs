@@ -22,7 +22,13 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
   };
 
   const components: Components = {
-    code({ node, inline, className, children, ...props }) {
+    code({ node, inline, className, children, ...props }: {
+      node?: any;
+      inline?: boolean;
+      className?: string;
+      children: React.ReactNode;
+      [key: string]: any;
+    }) {
       const match = /language-(\w+)/.exec(className || '');
       const codeIndex = Math.random();
 
