@@ -9,48 +9,48 @@ const documentationSections = [
     description: "Documentation for the CVS API including vouchers and gift cards management.",
     path: "/docs/cvs",
     icon: DollarSign,
-    bgColor: "bg-deep-teal",
-    cardBg: "bg-deep-teal"
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
     title: "Point of Sale",
     description: "Integration guide for Point of Sale (POS) systems.",
     path: "/docs/pos",
     icon: Store,
-    bgColor: "bg-deep-teal",
-    cardBg: "bg-deep-teal"
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
     title: "eCommerce",
     description: "Quick start guide and API reference for retailers and merchants.",
     path: "/docs/ecommerce",
     icon: Heart,
-    bgColor: "bg-deep-teal",
-    cardBg: "bg-deep-teal"
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
     title: "Value Store Provider",
     description: "Overview and integration guide for Value Store Provider (VSP).",
     path: "/docs/vsp",
     icon: CreditCard,
-    bgColor: "bg-deep-teal",
-    cardBg: "bg-deep-teal"
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
     title: "Loyalty",
     description: "Documentation for loyalty program integration.",
     path: "/docs/loyalty",
     icon: Star,
-    bgColor: "bg-deep-teal",
-    cardBg: "bg-deep-teal"
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
     title: "Earn Gateway",
     description: "Implementation guide for the Earn Gateway system.",
     path: "/docs/earn",
     icon: PieChart,
-    bgColor: "bg-deep-teal",
-    cardBg: "bg-deep-teal"
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   }
 ];
 
