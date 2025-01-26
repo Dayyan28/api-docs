@@ -9,48 +9,48 @@ const documentationSections = [
     description: "Documentation for the CVS API including vouchers and gift cards management.",
     path: "/docs/cvs",
     icon: DollarSign,
-    bgColor: "bg-secondary-cream/20",
-    cardBg: "bg-primary-dark-teal/90"
+    bgColor: "bg-deep-teal",
+    cardBg: "bg-deep-teal"
   },
   {
     title: "Point of Sale",
     description: "Integration guide for Point of Sale (POS) systems.",
     path: "/docs/pos",
     icon: Store,
-    bgColor: "bg-secondary-teal/20",
-    cardBg: "bg-primary-dark-teal/90"
+    bgColor: "bg-deep-teal",
+    cardBg: "bg-deep-teal"
   },
   {
     title: "eCommerce",
     description: "Quick start guide and API reference for retailers and merchants.",
     path: "/docs/ecommerce",
     icon: Heart,
-    bgColor: "bg-secondary-blue/20",
-    cardBg: "bg-primary-dark-teal/90"
+    bgColor: "bg-deep-teal",
+    cardBg: "bg-deep-teal"
   },
   {
     title: "Value Store Provider",
     description: "Overview and integration guide for Value Store Provider (VSP).",
     path: "/docs/vsp",
     icon: CreditCard,
-    bgColor: "bg-primary-orange/20",
-    cardBg: "bg-primary-dark-teal/90"
+    bgColor: "bg-deep-teal",
+    cardBg: "bg-deep-teal"
   },
   {
     title: "Loyalty",
     description: "Documentation for loyalty program integration.",
     path: "/docs/loyalty",
     icon: Star,
-    bgColor: "bg-secondary-cream/20",
-    cardBg: "bg-primary-dark-teal/90"
+    bgColor: "bg-deep-teal",
+    cardBg: "bg-deep-teal"
   },
   {
     title: "Earn Gateway",
     description: "Implementation guide for the Earn Gateway system.",
     path: "/docs/earn",
     icon: PieChart,
-    bgColor: "bg-secondary-teal/20",
-    cardBg: "bg-primary-dark-teal/90"
+    bgColor: "bg-deep-teal",
+    cardBg: "bg-deep-teal"
   }
 ];
 
@@ -101,7 +101,7 @@ const Index = () => {
       </div>
 
       {/* Documentation Cards Section */}
-      <div className="bg-white py-24">
+      <div className="bg-deep-teal py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {documentationSections.map((section, index) => (
@@ -116,7 +116,7 @@ const Index = () => {
                   to={section.path}
                   className="block h-full transform transition-all duration-300 hover:scale-105"
                 >
-                  <Card className={`h-full ${section.cardBg} border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.bgColor}`}>
+                  <Card className={`h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.cardBg}`}>
                     <div className="p-8 h-full flex flex-col">
                       <div className="mb-6 text-secondary-cream">
                         {<section.icon size={40} />}
