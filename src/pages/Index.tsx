@@ -73,7 +73,7 @@ const Index = () => {
             <motion.img
               src="/logo.png"
               alt="YoYo Group Logo"
-              className="mx-auto mb-8 h-32" // Increased logo size further
+              className="mx-auto mb-8 h-32"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -143,7 +143,7 @@ const Index = () => {
             <div>
               <img src="/logo.png" alt="YoYo Group Logo" className="h-8 mb-4" />
               <p className="text-secondary-blue">
-                Empowering businesses with innovative payment solutions.
+                Attract. Engage. Retain. Grow.
               </p>
             </div>
             <div>
