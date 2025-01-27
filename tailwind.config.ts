@@ -98,9 +98,10 @@ export default {
         DEFAULT: {
           css: {
             maxWidth: 'none',
+            color: '#000',
             code: {
-              backgroundColor: '#1F2937',
-              color: '#A9B1D6',
+              backgroundColor: '#f3f4f6',
+              color: '#111827',
               padding: '0.25rem',
               borderRadius: '0.25rem',
             },
