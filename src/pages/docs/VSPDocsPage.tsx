@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
-import vspContent from '/docs/vsp/_vsp.md';
-import vspModels from '/docs/vsp/_vsp_models.md';
-import vspIntegration from '/docs/vsp/_vsp_integration_requirements.md';
+import vspContent from '/docs/vsp/_vsp.md?raw';
+import vspModels from '/docs/vsp/_vsp_models.md?raw';
+import vspIntegration from '/docs/vsp/_vsp_integration_requirements.md?raw';
 
 const VSPDocsPage = () => {
   const [activeSection, setActiveSection] = useState('overview');
