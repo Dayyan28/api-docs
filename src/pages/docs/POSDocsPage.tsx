@@ -1,44 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
-import { loadMarkdownFile } from '@/utils/markdown';
+import posTransaction from '../../../public/docs/pos/_pos_transaction.md';
+import posUI from '../../../public/docs/pos/_pos_ui.md';
 
 const POSDocsPage = () => {
-  const [content, setContent] = useState('');
-
-  useEffect(() => {
-    const loadContent = async () => {
-      try {
-        // Load overview content first
-        const overviewContent = await loadMarkdownFile('/docs/pos/_pos_overview.md');
-        
-        // Load additional content
-        const historyContent = await loadMarkdownFile('/docs/pos/_pos_history.md');
-        const transactionContent = await loadMarkdownFile('/docs/pos/_pos_transaction.md');
-        const refundContent = await loadMarkdownFile('/docs/pos/_pos_refund.md');
-        
-        // Combine content in desired order
-        const combinedContent = [
-          overviewContent,
-          historyContent,
-          transactionContent,
-          refundContent
-        ].join('\n\n');
-        
-        setContent(combinedContent);
-      } catch (error) {
-        console.error('Error loading markdown content:', error);
-        setContent('# Error\nFailed to load documentation content.');
-      }
-    };
-
-    loadContent();
-  }, []);
+  const [activeSection, setActiveSection] = useState('overview');
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="prose prose-invert max-w-none">
-        <MarkdownRenderer content={content} />
-      </div>
+    <div className="flex bg-white min-h-screen">
+      <DocsSidebar activeSection={activeSection} onSectionClick={setActiveSection} />
+      <main className="flex-1 p-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <MarkdownRenderer content={posUI} className="text-black" />
+          <MarkdownRenderer content={posTransaction} className="text-black" />
+        </div>
+      </main>
+      <aside className="w-1/3 p-6 border-l border-gray-200 sticky top-0 h-screen overflow-y-auto">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <pre className="text-sm text-gray-800">
+            {/* Code snippets will be dynamically rendered here */}
+          </pre>
+        </div>
+      </aside>
     </div>
   );
 };

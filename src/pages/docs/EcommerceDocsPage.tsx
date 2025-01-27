@@ -1,38 +1,25 @@
 import { useState } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
-import { CodeBlock } from '@/components/CodeBlock';
+import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 
 const EcommerceDocsPage = () => {
-  const [activeSection, setActiveSection] = useState('introduction');
+  const [activeSection, setActiveSection] = useState('overview');
 
   return (
-    <div className="flex">
-      <DocsSidebar 
-        activeSection={activeSection} 
-        onSectionClick={setActiveSection} 
-      />
-      <main className="flex-1 p-8">
+    <div className="flex bg-white min-h-screen">
+      <DocsSidebar activeSection={activeSection} onSectionClick={setActiveSection} />
+      <main className="flex-1 p-8 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">eCommerce API</h1>
-          
-          <section id="introduction" className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4">Quick Start for Retailers & Merchants</h2>
-            <p className="text-gray-300 mb-4">
-              Get started with our eCommerce API integration for retailers and merchants.
-            </p>
-          </section>
+          <h1 className="text-3xl font-bold text-black mb-6">E-commerce Documentation</h1>
+          {/* Content will be added here */}
         </div>
       </main>
-      <aside className="w-80 p-6 border-l border-gray-800">
-        <CodeBlock
-          method="GET"
-          endpoint="/api/v1/merchant/status"
-          response={`{
-  "status": "active",
-  "merchantId": "123456"
-}`}
-          isVisible={activeSection === 'introduction'}
-        />
+      <aside className="w-1/3 p-6 border-l border-gray-200 sticky top-0 h-screen overflow-y-auto">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <pre className="text-sm text-gray-800">
+            {/* Code snippets will be dynamically rendered here */}
+          </pre>
+        </div>
       </aside>
     </div>
   );

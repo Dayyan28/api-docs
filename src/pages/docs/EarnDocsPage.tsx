@@ -6,12 +6,12 @@ const EarnDocsPage = () => {
   const [activeSection, setActiveSection] = useState('introduction');
 
   return (
-    <div className="flex">
+    <div className="flex bg-white min-h-screen">
       <DocsSidebar 
         activeSection={activeSection} 
         onSectionClick={setActiveSection} 
       />
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold mb-8">Earn Gateway</h1>
           
@@ -23,20 +23,22 @@ const EarnDocsPage = () => {
           </section>
         </div>
       </main>
-      <aside className="w-80 p-6 border-l border-gray-800">
-        <CodeBlock
-          method="POST"
-          endpoint="/api/v1/earn/transaction"
-          request={`{
+      <aside className="w-1/3 p-6 border-l border-gray-200 sticky top-0 h-screen overflow-y-auto">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <CodeBlock
+            method="POST"
+            endpoint="/api/v1/earn/transaction"
+            request={`{
   "amount": 100,
   "type": "purchase"
 }`}
-          response={`{
+            response={`{
   "earnedPoints": 10,
   "transactionId": "tx_123"
 }`}
-          isVisible={activeSection === 'introduction'}
-        />
+            isVisible={activeSection === 'introduction'}
+          />
+        </div>
       </aside>
     </div>
   );

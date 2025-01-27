@@ -55,11 +55,11 @@
   }
 
   body {
-    @apply bg-docsbg text-white font-sans antialiased;
+    @apply bg-white text-black font-sans antialiased;
   }
 
   pre {
-    @apply font-mono bg-codebg text-codefg p-4 rounded-md;
+    @apply font-mono bg-gray-50 text-gray-800 p-4 rounded-md;
   }
 }
 
