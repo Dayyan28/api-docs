@@ -64,23 +64,23 @@
 }
 
 .docs-content {
-  @apply prose prose-invert max-w-none;
+  @apply prose prose-black max-w-none;
 }
 
 .docs-content h1 {
-  @apply text-3xl font-bold text-secondary-cream mb-6;
+  @apply text-3xl font-bold text-gray-900 mb-6;
 }
 
 .docs-content h2 {
-  @apply text-2xl font-semibold text-secondary-cream mt-8 mb-4;
+  @apply text-2xl font-semibold text-gray-900 mt-8 mb-4;
 }
 
 .docs-content h3 {
-  @apply text-xl font-semibold text-secondary-cream mt-6 mb-3;
+  @apply text-xl font-semibold text-gray-900 mt-6 mb-3;
 }
 
 .docs-content p {
-  @apply text-secondary-blue mb-4;
+  @apply text-gray-700 mb-4;
 }
 
 .docs-content ul {
@@ -92,23 +92,23 @@
 }
 
 .docs-content li {
-  @apply text-secondary-blue mb-2;
+  @apply text-gray-700 mb-2;
 }
 
 .docs-content code {
-  @apply bg-codebg text-codefg px-2 py-1 rounded;
+  @apply bg-gray-100 text-gray-800 px-2 py-1 rounded;
 }
 
 .docs-content pre {
-  @apply bg-codebg p-4 rounded-lg my-4;
+  @apply bg-gray-100 p-4 rounded-lg my-4;
 }
 
 .docs-content a {
-  @apply text-primary-orange hover:underline;
+  @apply text-blue-600 hover:underline;
 }
 
 .docs-content blockquote {
-  @apply border-l-4 border-secondary-teal pl-4 my-4 text-secondary-blue italic;
+  @apply border-l-4 border-gray-200 pl-4 my-4 text-gray-600 italic;
 }
 
 .docs-content table {
@@ -117,11 +117,11 @@
 
 .docs-content th,
 .docs-content td {
-  @apply border border-secondary-teal px-4 py-2;
+  @apply border border-gray-200 px-4 py-2;
 }
 
 .docs-content th {
-  @apply bg-deep-teal text-secondary-cream;
+  @apply bg-gray-50 text-gray-700;
 }
 
 .nav-item {
