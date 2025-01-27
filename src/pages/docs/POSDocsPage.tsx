@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
-import posTransaction from '../../../public/docs/pos/_pos_transaction.md';
-import posUI from '../../../public/docs/pos/_pos_ui.md';
+import posTransaction from '@/../../public/docs/pos/_pos_transaction.md';
+import posUI from '@/../../public/docs/pos/_pos_ui.md';
 
 const POSDocsPage = () => {
   const [activeSection, setActiveSection] = useState('overview');
