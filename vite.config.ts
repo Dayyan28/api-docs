@@ -19,5 +19,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  assetsInclude: ["**/*.md"], // Add this line to handle markdown files
+  assetsInclude: ["**/*.md"], // This line tells Vite to treat .md files as assets
 }));
