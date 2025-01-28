@@ -6,51 +6,51 @@ import { Heart, DollarSign, Store, CreditCard, Star, PieChart, Facebook, Linkedi
 const documentationSections = [
   {
     title: "Coupon | Vouchers & Giftcards",
+    subtitle: "Sign Up Deals And Referral Campaigns",
     description: "Documentation for the CVS API including vouchers and gift cards management.",
     path: "/docs/cvs",
     icon: DollarSign,
-    bgColor: "bg-primary-dark-teal",
-    cardBg: "bg-primary-dark-teal"
+    label: "More customers"
   },
   {
     title: "Point of Sale",
+    subtitle: "Customer Analytics",
     description: "Integration guide for Point of Sale (POS) systems.",
     path: "/docs/pos",
     icon: Store,
-    bgColor: "bg-primary-dark-teal",
-    cardBg: "bg-primary-dark-teal"
+    label: "More data"
   },
   {
     title: "eCommerce",
+    subtitle: "Targeted Campaigns",
     description: "Quick start guide and API reference for retailers and merchants.",
     path: "/docs/ecommerce",
     icon: Heart,
-    bgColor: "bg-primary-dark-teal",
-    cardBg: "bg-primary-dark-teal"
+    label: "More transactions"
   },
   {
     title: "Value Store Provider",
+    subtitle: "Customer Segmentation",
     description: "Overview and integration guide for Value Store Provider (VSP).",
     path: "/docs/vsp",
     icon: CreditCard,
-    bgColor: "bg-primary-dark-teal",
-    cardBg: "bg-primary-dark-teal"
+    label: "More Spend and Frequency"
   },
   {
     title: "Loyalty",
+    subtitle: "Customer Analytics",
     description: "Documentation for loyalty program integration.",
     path: "/docs/loyalty",
     icon: Star,
-    bgColor: "bg-primary-dark-teal",
-    cardBg: "bg-primary-dark-teal"
+    label: "More data"
   },
   {
     title: "Earn Gateway",
+    subtitle: "Targeted Campaigns",
     description: "Implementation guide for the Earn Gateway system.",
     path: "/docs/earn",
     icon: PieChart,
-    bgColor: "bg-primary-dark-teal",
-    cardBg: "bg-primary-dark-teal"
+    label: "More transactions"
   }
 ];
 
@@ -103,7 +103,7 @@ const Index = () => {
       {/* Documentation Cards Section */}
       <div className="bg-white py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {documentationSections.map((section, index) => (
               <motion.div
                 key={section.path}
@@ -116,15 +116,25 @@ const Index = () => {
                   to={section.path}
                   className="block h-full transform transition-all duration-300 hover:scale-105"
                 >
-                  <Card className={`h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.cardBg}`}>
-                    <div className="p-8 h-full flex flex-col">
-                      <div className="mb-6 text-secondary-cream">
-                        {<section.icon size={40} />}
+                  <Card className="h-full bg-[#F8F8F8] border-none shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="p-8 h-full">
+                      <div className="flex justify-between items-start mb-6">
+                        <div>
+                          <p className="text-[#00313C] text-sm font-medium mb-4">
+                            {section.label}
+                          </p>
+                          <h2 className="text-3xl font-bold text-[#00313C] mb-2">
+                            {section.title}
+                          </h2>
+                          <p className="text-[#6B7280] text-xl mb-4">
+                            {section.subtitle}
+                          </p>
+                        </div>
+                        <div className="text-[#00313C]">
+                          {<section.icon size={40} />}
+                        </div>
                       </div>
-                      <h2 className="text-2xl font-semibold text-secondary-cream mb-4">
-                        {section.title}
-                      </h2>
-                      <p className="text-secondary-blue text-lg">
+                      <p className="text-[#4B5563] text-base leading-relaxed">
                         {section.description}
                       </p>
                     </div>
