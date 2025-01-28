@@ -17,19 +17,17 @@ const CVSDocsPage = () => {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const overviewContent = await loadMarkdownFile('/docs/cvs/_cvs_overview.md');
-        const campaignsContent = await loadMarkdownFile('/docs/cvs/_cvs_campaigns.md');
-        const couponsContent = await loadMarkdownFile('/docs/cvs/_cvs_coupons.md');
-        const giftcardsContent = await loadMarkdownFile('/docs/cvs/_cvs_giftcards.md');
-        
-        const combinedContent = [
-          overviewContent,
-          campaignsContent,
-          couponsContent,
-          giftcardsContent
-        ].join('\n\n');
-        
-        setContent(combinedContent);
+        const files = [
+          '/docs/cvs/_cvs_overview.md',
+          '/docs/cvs/_cvs_giftcardcampaigns.md',
+          '/docs/cvs/_cvs_giftcards.md',
+          '/docs/cvs/_cvs_giftcardtransactions.md',
+          '/docs/cvs/_cvs_transactions.md',
+          '/docs/cvs/_cvs_physicalgiftcards.md'
+        ];
+
+        const contents = await Promise.all(files.map(file => loadMarkdownFile(file)));
+        setContent(contents.join('\n\n'));
       } catch (error) {
         console.error('Error loading markdown content:', error);
         setContent('# Error\nFailed to load documentation content.');
@@ -45,6 +43,7 @@ const CVSDocsPage = () => {
     request?: string;
     response?: string;
   }) => {
+    console.log('Code block detected:', codeBlock);
     setActiveCodeExample(codeBlock);
   };
 

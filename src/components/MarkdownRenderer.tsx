@@ -41,19 +41,24 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: Mar
       if (!inline && match) {
         const codeContent = String(children);
         
-        // Extract method and endpoint from comments if present
-        const methodMatch = codeContent.match(/# Method: (GET|POST|PUT|DELETE)/);
-        const endpointMatch = codeContent.match(/# Endpoint: (.+)/);
-        const requestMatch = codeContent.match(/# Request\n\n(.+?)(?=\n# |$)/s);
-        const responseMatch = codeContent.match(/# Response\n\n(.+?)(?=\n# |$)/s);
+        // Extract method from the first line that contains GET, POST, PUT, or DELETE
+        const methodMatch = codeContent.match(/(?:GET|POST|PUT|DELETE)/);
+        
+        // Extract endpoint from the URL in the curl command
+        const endpointMatch = codeContent.match(/curl\s+"([^"]+)"/);
+        
+        // Extract request and response sections
+        const sections = codeContent.split(/# Example |#\s*Example /);
+        const requestSection = sections.find(section => section.toLowerCase().includes('request'));
+        const responseSection = sections.find(section => section.toLowerCase().includes('response'));
 
         useEffect(() => {
-          if (onCodeBlockVisible && (methodMatch || endpointMatch || requestMatch || responseMatch)) {
+          if (onCodeBlockVisible && (methodMatch || endpointMatch || requestSection || responseSection)) {
             onCodeBlockVisible({
-              method: methodMatch?.[1],
-              endpoint: endpointMatch?.[1],
-              request: requestMatch?.[1],
-              response: responseMatch?.[1]
+              method: methodMatch ? methodMatch[0] : undefined,
+              endpoint: endpointMatch ? endpointMatch[1] : undefined,
+              request: requestSection ? requestSection.trim() : undefined,
+              response: responseSection ? responseSection.trim() : undefined
             });
           }
         }, []);
