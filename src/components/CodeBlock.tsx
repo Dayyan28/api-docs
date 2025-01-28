@@ -25,21 +25,22 @@ export const CodeBlock = ({ method, endpoint, request, response, isVisible }: Co
   return (
     <div className={`code-block ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
       <div className="mb-4">
-        <span className="text-green-400">{method}</span> {endpoint}
+        <span className="text-green-400">{method}</span>{' '}
+        <span className="text-white">{endpoint}</span>
       </div>
       {request && (
         <div className="mb-4">
-          <div className="text-sm text-gray-400 mb-2">Request</div>
+          <div className="text-gray-400 mb-2">Request</div>
           <pre className="bg-gray-900 p-4 rounded">
-            {request}
+            <code className="text-white">{request}</code>
           </pre>
         </div>
       )}
       {response && (
         <div>
-          <div className="text-sm text-gray-400 mb-2">Response</div>
+          <div className="text-gray-400 mb-2">Response</div>
           <pre className="bg-gray-900 p-4 rounded">
-            {response}
+            <code className="text-white">{response}</code>
           </pre>
         </div>
       )}

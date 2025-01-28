@@ -133,7 +133,7 @@
 }
 
 .code-block {
-  @apply bg-codebg p-6 rounded-lg font-mono text-sm text-codefg;
+  @apply bg-codebg p-6 rounded-lg font-mono text-sm text-white;
 }
 
 .sticky-sidebar {
