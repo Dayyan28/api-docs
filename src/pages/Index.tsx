@@ -5,36 +5,52 @@ import { Heart, DollarSign, Store, CreditCard, Star, PieChart, Facebook, Linkedi
 
 const documentationSections = [
   {
-    title: "Attract",
-    subtitle: "Sign Up Deals And Referral Campaigns",
-    description: "For lead generation and trial boost, offer sign up deals for new customers to on-board them by the masses and turn loyal customers into a marketing tool with a stand-out referral campaign.",
+    title: "Coupon | Vouchers & Giftcards",
+    description: "Documentation for the CVS API including vouchers and gift cards management.",
     path: "/docs/cvs",
-    label: "More customers",
     icon: DollarSign,
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
-    title: "Engage",
-    subtitle: "Customer Analytics",
-    description: "Thanks to our dashboard, you can reward customers based on their location or previous shopping habits. Grow your database, get to know your customers, engage with them and get feedback.",
+    title: "Point of Sale",
+    description: "Integration guide for Point of Sale (POS) systems.",
     path: "/docs/pos",
-    label: "More data",
     icon: Store,
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
-    title: "Retain",
-    subtitle: "Targeted Campaigns",
-    description: "Whether you're targeting and rewarding new customers or are identifying slipping customers and incentivising them to get back in store - give customers what they want, when they want it.",
+    title: "eCommerce",
+    description: "Quick start guide and API reference for retailers and merchants.",
     path: "/docs/ecommerce",
-    label: "More transactions",
     icon: Heart,
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   },
   {
-    title: "Grow",
-    subtitle: "Customer Segmentation",
-    description: "It's all in the details. Prove that you understand their wants and needs by segmenting and targeting your customers. It will drive increased basket values and frequency.",
+    title: "Value Store Provider",
+    description: "Overview and integration guide for Value Store Provider (VSP).",
     path: "/docs/vsp",
-    label: "More Spend and Frequency",
     icon: CreditCard,
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
+  },
+  {
+    title: "Loyalty",
+    description: "Documentation for loyalty program integration.",
+    path: "/docs/loyalty",
+    icon: Star,
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
+  },
+  {
+    title: "Earn Gateway",
+    description: "Implementation guide for the Earn Gateway system.",
+    path: "/docs/earn",
+    icon: PieChart,
+    bgColor: "bg-primary-dark-teal",
+    cardBg: "bg-primary-dark-teal"
   }
 ];
 
@@ -87,7 +103,7 @@ const Index = () => {
       {/* Documentation Cards Section */}
       <div className="bg-white py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {documentationSections.map((section, index) => (
               <motion.div
                 key={section.path}
@@ -100,31 +116,17 @@ const Index = () => {
                   to={section.path}
                   className="block h-full transform transition-all duration-300 hover:scale-105"
                 >
-                  <Card className="h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-gray-50 p-8">
-                    <div className="space-y-6">
-                      <div className="text-sm font-medium text-gray-600">
-                        {section.label}
+                  <Card className={`h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 ${section.cardBg}`}>
+                    <div className="p-8 h-full flex flex-col">
+                      <div className="mb-6 text-secondary-cream">
+                        {<section.icon size={40} />}
                       </div>
-                      <div className="flex justify-between items-start">
-                        <div className="space-y-4 flex-1">
-                          <h2 className="text-4xl font-bold text-primary-dark-teal">
-                            {section.title}
-                          </h2>
-                          <h3 className="text-xl text-gray-500">
-                            {section.subtitle}
-                          </h3>
-                          <p className="text-gray-600 leading-relaxed">
-                            {section.description}
-                          </p>
-                        </div>
-                        <div className="ml-6">
-                          <img 
-                            src={`/lovable-uploads/icon-${section.title.toLowerCase()}.png`} 
-                            alt={`${section.title} icon`}
-                            className="w-24 h-24 object-contain"
-                          />
-                        </div>
-                      </div>
+                      <h2 className="text-2xl font-semibold text-secondary-cream mb-4">
+                        {section.title}
+                      </h2>
+                      <p className="text-secondary-blue text-lg">
+                        {section.description}
+                      </p>
                     </div>
                   </Card>
                 </Link>

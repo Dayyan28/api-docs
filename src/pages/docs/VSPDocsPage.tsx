@@ -1,61 +1,30 @@
-// src/pages/docs/VSPDocsPage.tsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
-import { cn } from '@/lib/utils';
+import vspContent from '/docs/vsp/_vsp.md?raw';
+import vspModels from '/docs/vsp/_vsp_models.md?raw';
+import vspIntegration from '/docs/vsp/_vsp_integration_requirements.md?raw';
 
 const VSPDocsPage = () => {
   const [activeSection, setActiveSection] = useState('overview');
-  const [parsedContent, setParsedContent] = useState<ParsedContent | null>(null);
-
-  useEffect(() => {
-    const content = parseMarkdownWithSnippets(vspContent);
-    setParsedContent(content);
-  }, []);
 
   return (
-    <div className="flex min-h-screen bg-white">
-      {/* Left Sidebar - Navigation */}
-      <div className="w-64 border-r">
-        <DocsSidebar 
-          activeSection={activeSection} 
-          onSectionChange={setActiveSection} 
-        />
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 overflow-auto">
-        <div className="max-w-3xl px-8 py-6">
-          {parsedContent && (
-            <MarkdownRenderer 
-              content={parsedContent.content}
-              onSectionVisible={setActiveSection}
-            />
-          )}
+    <div className="flex bg-white min-h-screen">
+      <DocsSidebar activeSection={activeSection} onSectionClick={setActiveSection} />
+      <main className="flex-1 p-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <MarkdownRenderer content={vspContent} className="text-black" />
+          <MarkdownRenderer content={vspModels} className="text-black" />
+          <MarkdownRenderer content={vspIntegration} className="text-black" />
         </div>
-      </div>
-
-      {/* Right Sidebar - Code Snippets */}
-      <div className="w-96 border-l overflow-auto">
-        <div className="sticky top-0 p-4 space-y-4">
-          {parsedContent?.snippets.map(snippet => (
-            <div 
-              key={snippet.id}
-              id={`snippet-${snippet.id}`}
-              className="rounded-lg bg-gray-50 p-4"
-            >
-              <div className="text-sm font-medium text-gray-500 mb-2">
-                {snippet.context}
-              </div>
-              <pre className="overflow-x-auto">
-                <code className={`language-${snippet.language}`}>
-                  {JSON.stringify(JSON.parse(snippet.code), null, 2)}
-                </code>
-              </pre>
-            </div>
-          ))}
+      </main>
+      <aside className="w-1/3 p-6 border-l border-gray-200 sticky top-0 h-screen overflow-y-auto">
+        <div className="bg-gray-50 rounded-lg p-4">
+          <pre className="text-sm text-gray-800">
+            {/* Code snippets will be dynamically rendered here */}
+          </pre>
         </div>
-      </div>
+      </aside>
     </div>
   );
 };
