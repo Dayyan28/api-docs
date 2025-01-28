@@ -4,15 +4,21 @@ import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils';
 import { Copy } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Components } from 'react-markdown';
 
 interface MarkdownRendererProps {
   content: string;
   className?: string;
+  onCodeBlockVisible?: (codeBlock: {
+    method?: string;
+    endpoint?: string;
+    request?: string;
+    response?: string;
+  }) => void;
 }
 
-export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
+export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: MarkdownRendererProps) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = async (code: string, index: number) => {
@@ -33,8 +39,27 @@ export const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) 
       const codeIndex = Math.random();
 
       if (!inline && match) {
+        const codeContent = String(children);
+        
+        // Extract method and endpoint from comments if present
+        const methodMatch = codeContent.match(/# Method: (GET|POST|PUT|DELETE)/);
+        const endpointMatch = codeContent.match(/# Endpoint: (.+)/);
+        const requestMatch = codeContent.match(/# Request\n\n(.+?)(?=\n# |$)/s);
+        const responseMatch = codeContent.match(/# Response\n\n(.+?)(?=\n# |$)/s);
+
+        useEffect(() => {
+          if (onCodeBlockVisible && (methodMatch || endpointMatch || requestMatch || responseMatch)) {
+            onCodeBlockVisible({
+              method: methodMatch?.[1],
+              endpoint: endpointMatch?.[1],
+              request: requestMatch?.[1],
+              response: responseMatch?.[1]
+            });
+          }
+        }, []);
+
         return (
-          <div className="relative float-right w-[45%] my-4">
+          <div className="relative my-4">
             <div className="relative bg-codebg rounded-lg overflow-hidden">
               <button
                 onClick={() => handleCopy(String(children), codeIndex)}
