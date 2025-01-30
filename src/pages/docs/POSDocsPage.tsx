@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { loadMarkdownFile } from '@/utils/markdown';
 import { DocsSidebar } from '@/components/DocsSidebar';
@@ -13,6 +13,7 @@ const POSDocsPage = () => {
     request?: string;
     response?: string;
   } | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -36,33 +37,69 @@ const POSDocsPage = () => {
     loadContent();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!contentRef.current) return;
+
+      const sections = contentRef.current.querySelectorAll('h1, h2, h3');
+      let currentSection = '';
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100) {
+          const sectionId = section.id || section.textContent?.toLowerCase().replace(/\s+/g, '-') || '';
+          if (sectionId) {
+            currentSection = sectionId;
+          }
+        }
+      });
+
+      if (currentSection && currentSection !== activeSection) {
+        setActiveSection(currentSection);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeSection]);
+
+  const handleSectionClick = (sectionId: string) => {
+    const element = document.getElementById(sectionId) || 
+                   document.querySelector(`[data-section="${sectionId}"]`) ||
+                   document.querySelector(`h1, h2, h3`);
+
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
+      setActiveSection(sectionId);
+    }
+  };
+
   const handleCodeBlockVisible = (codeBlock: {
     method?: string;
     endpoint?: string;
     request?: string;
     response?: string;
   }) => {
-    console.log('Code block detected:', codeBlock);
     setActiveCodeExample(codeBlock);
   };
 
   return (
     <div className="min-h-screen bg-white">
       <div className="flex">
-        <div className="w-64 h-screen sticky top-0 overflow-y-auto border-r border-gray-200">
-          <DocsSidebar 
-            activeSection={activeSection}
-            onSectionClick={(sectionId) => {
-              setActiveSection(sectionId);
-              const element = document.getElementById(sectionId);
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          />
-        </div>
+        <DocsSidebar 
+          activeSection={activeSection}
+          onSectionClick={handleSectionClick}
+        />
 
-        <div className="flex-1 px-8 py-6">
+        <div className="flex-1 px-8 py-6" ref={contentRef}>
           <div className="prose prose-black max-w-none">
             <MarkdownRenderer 
               content={content} 

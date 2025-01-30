@@ -53,7 +53,6 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
   const [expanded, setExpanded] = useState<string[]>(['overview', 'gift-cards']);
 
   useEffect(() => {
-    // Auto-expand parent section when child is active
     const activeParent = navigation.find(section => 
       section.children?.some(child => child.id === activeSection)
     );
@@ -79,8 +78,8 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
               onClick={() => toggleSection(item.id)}
               className={`flex items-center w-full text-left px-4 py-2 text-sm transition-colors ${
                 expanded.includes(item.id)
-                  ? 'text-gray-900 font-medium'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'text-primary-dark-teal font-medium'
+                  : 'text-gray-600 hover:text-primary-dark-teal'
               }`}
             >
               {expanded.includes(item.id) ? (
@@ -88,7 +87,7 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
               ) : (
                 <ChevronRight className="w-4 h-4 mr-2" />
               )}
-              <span>{item.title}</span>
+              <span className="font-medium">{item.title}</span>
             </button>
             {expanded.includes(item.id) && (
               <div className="ml-4">
@@ -101,8 +100,8 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
             onClick={() => onSectionClick(item.id)}
             className={`w-full text-left px-4 py-2 text-sm transition-colors rounded-md ${
               activeSection === item.id 
-                ? 'bg-secondary-cream text-primary-orange font-medium'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'text-primary-orange bg-secondary-cream font-medium'
+                : 'text-gray-600 hover:text-primary-dark-teal'
             }`}
           >
             {item.title}
