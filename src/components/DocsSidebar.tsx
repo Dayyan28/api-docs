@@ -79,8 +79,8 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
               onClick={() => toggleSection(item.id)}
               className={`flex items-center w-full text-left px-4 py-2 text-sm transition-colors ${
                 expanded.includes(item.id)
-                  ? 'text-primary-dark-teal font-medium'
-                  : 'text-gray-600 hover:text-primary-dark-teal'
+                  ? 'text-gray-900 font-medium'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               {expanded.includes(item.id) ? (
@@ -88,7 +88,7 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
               ) : (
                 <ChevronRight className="w-4 h-4 mr-2" />
               )}
-              <span className="font-medium">{item.title}</span>
+              <span>{item.title}</span>
             </button>
             {expanded.includes(item.id) && (
               <div className="ml-4">
@@ -101,8 +101,8 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
             onClick={() => onSectionClick(item.id)}
             className={`w-full text-left px-4 py-2 text-sm transition-colors rounded-md ${
               activeSection === item.id 
-                ? 'text-primary-orange bg-secondary-cream font-medium'
-                : 'text-gray-600 hover:text-primary-dark-teal'
+                ? 'bg-secondary-cream text-primary-orange font-medium'
+                : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             {item.title}

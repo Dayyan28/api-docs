@@ -48,23 +48,34 @@ const CVSDocsPage = () => {
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= 100) {
-          currentSection = section.id || section.textContent?.toLowerCase().replace(/\s+/g, '-') || '';
+          const sectionId = section.id || section.textContent?.toLowerCase().replace(/\s+/g, '-') || '';
+          if (sectionId) {
+            currentSection = sectionId;
+          }
         }
       });
 
-      if (currentSection) {
+      if (currentSection && currentSection !== activeSection) {
         setActiveSection(currentSection);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [activeSection]);
 
   const handleSectionClick = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 80; // Adjust this value based on your header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
       setActiveSection(sectionId);
     }
   };
@@ -81,12 +92,10 @@ const CVSDocsPage = () => {
   return (
     <div className="min-h-screen bg-white">
       <div className="flex">
-        <div className="w-64 h-screen sticky top-0 overflow-y-auto border-r border-gray-200">
-          <DocsSidebar 
-            activeSection={activeSection}
-            onSectionClick={handleSectionClick}
-          />
-        </div>
+        <DocsSidebar 
+          activeSection={activeSection}
+          onSectionClick={handleSectionClick}
+        />
 
         <div className="flex-1 px-8 py-6" ref={contentRef}>
           <div className="prose prose-black max-w-none">
