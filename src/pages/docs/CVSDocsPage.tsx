@@ -47,7 +47,7 @@ const CVSDocsPage = () => {
 
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
-        if (rect.top <= 100) { // Adjust this value based on your header height
+        if (rect.top <= 100) {
           currentSection = section.id || section.textContent?.toLowerCase().replace(/\s+/g, '-') || '';
         }
       });
