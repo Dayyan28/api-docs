@@ -14,33 +14,43 @@ interface NavItem {
 
 const navigation: NavItem[] = [
   {
-    id: 'guides',
-    title: 'Guides',
+    id: 'overview',
+    title: 'Overview',
     children: [
       { id: 'introduction', title: 'Introduction' },
       { id: 'getting-started', title: 'Getting Started' }
     ]
   },
   {
-    id: 'authentication',
-    title: 'Authentication',
+    id: 'gift-cards',
+    title: 'Gift Cards',
     children: [
-      { id: 'auth-overview', title: 'Overview' },
-      { id: 'auth-tokens', title: 'Tokens' }
+      { id: 'gift-card-campaigns', title: 'Gift Card Campaigns' },
+      { id: 'physical-gift-cards', title: 'Physical Gift Cards' },
+      { id: 'gift-card-transactions', title: 'Gift Card Transactions' }
     ]
   },
   {
-    id: 'endpoints',
-    title: 'Endpoints',
+    id: 'transactions',
+    title: 'Transactions',
     children: [
-      { id: 'users', title: 'Users' },
-      { id: 'transactions', title: 'Transactions' }
+      { id: 'transaction-flow', title: 'Transaction Flow' },
+      { id: 'response-codes', title: 'Response Codes' }
+    ]
+  },
+  {
+    id: 'reference',
+    title: 'Reference',
+    children: [
+      { id: 'api-reference', title: 'API Reference' },
+      { id: 'error-codes', title: 'Error Codes' },
+      { id: 'test-cases', title: 'Test Cases' }
     ]
   }
 ];
 
 export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps) => {
-  const [expanded, setExpanded] = useState<string[]>(['guides', 'endpoints']);
+  const [expanded, setExpanded] = useState<string[]>(['overview', 'gift-cards']);
 
   const toggleSection = (sectionId: string) => {
     setExpanded(prev => 
@@ -57,14 +67,14 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
           <div>
             <button
               onClick={() => toggleSection(item.id)}
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors"
+              className="flex items-center w-full text-left px-4 py-2 text-sm text-primary-dark-teal hover:text-secondary-teal transition-colors"
             >
               {expanded.includes(item.id) ? (
                 <ChevronDown className="w-4 h-4 mr-2" />
               ) : (
                 <ChevronRight className="w-4 h-4 mr-2" />
               )}
-              {item.title}
+              <span className="font-medium">{item.title}</span>
             </button>
             {expanded.includes(item.id) && (
               <div className="ml-4">
@@ -77,9 +87,9 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
             onClick={() => onSectionClick(item.id)}
             className={`w-full text-left px-4 py-2 text-sm ${
               activeSection === item.id 
-                ? 'text-white bg-primary-teal'
-                : 'text-gray-400 hover:text-white'
-            } transition-colors`}
+                ? 'text-primary-orange bg-secondary-cream'
+                : 'text-gray-600 hover:text-primary-dark-teal'
+            } transition-colors rounded-md`}
           >
             {item.title}
           </button>
@@ -89,10 +99,10 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
   };
 
   return (
-    <nav className="w-64 h-screen overflow-y-auto px-4 py-6 border-r border-secondary-teal">
+    <nav className="w-64 h-screen overflow-y-auto px-4 py-6 border-r border-gray-200 bg-white">
       <div className="mb-8">
-        <h1 className="text-xl font-bold text-white mb-1">API Docs</h1>
-        <p className="text-sm text-gray-400">v1.0.0</p>
+        <h1 className="text-xl font-bold text-primary-dark-teal mb-1">CVS API Docs</h1>
+        <p className="text-sm text-gray-600">v1.0.0</p>
       </div>
       {renderNavItems(navigation)}
     </nav>
