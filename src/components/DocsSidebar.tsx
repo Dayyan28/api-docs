@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
 export interface DocsSidebarProps {
@@ -52,6 +52,16 @@ const navigation: NavItem[] = [
 export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps) => {
   const [expanded, setExpanded] = useState<string[]>(['overview', 'gift-cards']);
 
+  useEffect(() => {
+    // Auto-expand parent section when child is active
+    const activeParent = navigation.find(section => 
+      section.children?.some(child => child.id === activeSection)
+    );
+    if (activeParent && !expanded.includes(activeParent.id)) {
+      setExpanded(prev => [...prev, activeParent.id]);
+    }
+  }, [activeSection]);
+
   const toggleSection = (sectionId: string) => {
     setExpanded(prev => 
       prev.includes(sectionId) 
@@ -67,7 +77,11 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
           <div>
             <button
               onClick={() => toggleSection(item.id)}
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-primary-dark-teal hover:text-secondary-teal transition-colors"
+              className={`flex items-center w-full text-left px-4 py-2 text-sm transition-colors ${
+                expanded.includes(item.id)
+                  ? 'text-primary-dark-teal font-medium'
+                  : 'text-gray-600 hover:text-primary-dark-teal'
+              }`}
             >
               {expanded.includes(item.id) ? (
                 <ChevronDown className="w-4 h-4 mr-2" />
@@ -85,11 +99,11 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
         ) : (
           <button
             onClick={() => onSectionClick(item.id)}
-            className={`w-full text-left px-4 py-2 text-sm ${
+            className={`w-full text-left px-4 py-2 text-sm transition-colors rounded-md ${
               activeSection === item.id 
-                ? 'text-primary-orange bg-secondary-cream'
+                ? 'text-primary-orange bg-secondary-cream font-medium'
                 : 'text-gray-600 hover:text-primary-dark-teal'
-            } transition-colors rounded-md`}
+            }`}
           >
             {item.title}
           </button>

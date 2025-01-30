@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { loadMarkdownFile } from '@/utils/markdown';
 import { DocsSidebar } from '@/components/DocsSidebar';
@@ -13,6 +13,7 @@ const CVSDocsPage = () => {
     request?: string;
     response?: string;
   } | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -37,35 +38,57 @@ const CVSDocsPage = () => {
     loadContent();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!contentRef.current) return;
+
+      const sections = contentRef.current.querySelectorAll('h1, h2, h3');
+      let currentSection = '';
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100) { // Adjust this value based on your header height
+          currentSection = section.id || section.textContent?.toLowerCase().replace(/\s+/g, '-') || '';
+        }
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleSectionClick = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
+    }
+  };
+
   const handleCodeBlockVisible = (codeBlock: {
     method?: string;
     endpoint?: string;
     request?: string;
     response?: string;
   }) => {
-    console.log('Code block detected:', codeBlock);
     setActiveCodeExample(codeBlock);
   };
 
   return (
     <div className="min-h-screen bg-white">
       <div className="flex">
-        {/* Left Navigation Sidebar */}
         <div className="w-64 h-screen sticky top-0 overflow-y-auto border-r border-gray-200">
           <DocsSidebar 
             activeSection={activeSection}
-            onSectionClick={(sectionId) => {
-              setActiveSection(sectionId);
-              const element = document.getElementById(sectionId);
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
+            onSectionClick={handleSectionClick}
           />
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 px-8 py-6">
+        <div className="flex-1 px-8 py-6" ref={contentRef}>
           <div className="prose prose-black max-w-none">
             <MarkdownRenderer 
               content={content} 
@@ -74,7 +97,6 @@ const CVSDocsPage = () => {
           </div>
         </div>
 
-        {/* Right Code Examples Column */}
         <div className="w-1/3 h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4">
           <div className="rounded-lg bg-gray-100 p-4">
             <h3 className="text-sm font-semibold mb-2">Code Example</h3>
