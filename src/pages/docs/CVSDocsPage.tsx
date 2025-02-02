@@ -3,10 +3,13 @@ import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { loadMarkdownFile } from '@/utils/markdown';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { CodeBlock } from '@/components/CodeBlock';
+import { ErrorCodesDialog } from '@/components/ErrorCodesDialog';
+import { Button } from '@/components/ui/button';
 
 const CVSDocsPage = () => {
   const [content, setContent] = useState('');
   const [activeSection, setActiveSection] = useState('overview');
+  const [showErrorCodes, setShowErrorCodes] = useState(false);
   const [activeCodeExample, setActiveCodeExample] = useState<{
     method?: string;
     endpoint?: string;
@@ -98,6 +101,15 @@ const CVSDocsPage = () => {
         />
 
         <div className="flex-1 px-8 py-6" ref={contentRef}>
+          <div className="flex justify-end mb-4">
+            <Button
+              variant="outline"
+              onClick={() => setShowErrorCodes(true)}
+              className="text-primary-dark-teal hover:text-primary-orange"
+            >
+              View Error Codes
+            </Button>
+          </div>
           <div className="prose prose-black max-w-none">
             <MarkdownRenderer 
               content={content} 
@@ -125,6 +137,12 @@ const CVSDocsPage = () => {
           </div>
         </div>
       </div>
+
+      <ErrorCodesDialog
+        open={showErrorCodes}
+        onOpenChange={setShowErrorCodes}
+        serviceName="cvs"
+      />
     </div>
   );
 };
