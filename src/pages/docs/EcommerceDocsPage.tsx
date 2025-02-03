@@ -1,30 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
+import { loadMarkdownFile } from '@/utils/markdown';
 
 const EcommerceDocsPage = () => {
   const [activeSection, setActiveSection] = useState('overview');
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const files = [
+          '/docs/ecommerce/_ecommerce_overview.md',
+          // Add other eCommerce documentation files here
+        ];
+
+        const contents = await Promise.all(files.map(file => loadMarkdownFile(file)));
+        setContent(contents.join('\n\n'));
+      } catch (error) {
+        console.error('Error loading markdown content:', error);
+        setContent('# Error\nFailed to load documentation content.');
+      }
+    };
+
+    loadContent();
+  }, []);
+
+  const handleSectionClick = (sectionId: string) => {
+    setActiveSection(sectionId);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="flex bg-white min-h-screen">
       <DocsSidebar 
         docType="ecommerce"
         activeSection={activeSection} 
-        onSectionClick={setActiveSection} 
+        onSectionClick={handleSectionClick} 
       />
       <main className="flex-1 p-8 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-black mb-6">E-commerce Documentation</h1>
-          {/* Content will be added here */}
+          <MarkdownRenderer content={content} />
         </div>
       </main>
-      <aside className="w-1/3 p-6 border-l border-gray-200 sticky top-0 h-screen overflow-y-auto">
-        <div className="bg-gray-50 rounded-lg p-4">
-          <pre className="text-sm text-gray-800">
-            {/* Code snippets will be dynamically rendered here */}
-          </pre>
-        </div>
-      </aside>
     </div>
   );
 };
