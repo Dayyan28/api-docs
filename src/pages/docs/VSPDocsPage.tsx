@@ -1,6 +1,6 @@
 import { DocsSidebar } from "@/components/DocsSidebar";
 import { useState } from "react";
-import { MarkdownContent } from "@/components/MarkdownContent";
+import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { useMarkdownFiles } from "@/hooks/useMarkdownFiles";
 
 const VSPDocsPage = () => {
@@ -29,7 +29,7 @@ const VSPDocsPage = () => {
           </div>
         ) : (
           <div className="max-w-4xl mx-auto">
-            <MarkdownContent content={markdownContent} />
+            <MarkdownRenderer content={markdownContent} />
           </div>
         )}
       </main>

@@ -8,6 +8,7 @@ const EarnDocsPage = () => {
   return (
     <div className="flex bg-white min-h-screen">
       <DocsSidebar 
+        docType="pos"
         activeSection={activeSection} 
         onSectionClick={setActiveSection} 
       />
@@ -17,7 +18,7 @@ const EarnDocsPage = () => {
           
           <section id="introduction" className="mb-12">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
-            <p className="text-gray-300 mb-4">
+            <p className="text-gray-600 mb-4">
               Learn how to integrate with the Earn Gateway system for managing rewards and transactions.
             </p>
           </section>

@@ -7,7 +7,11 @@ const EcommerceDocsPage = () => {
 
   return (
     <div className="flex bg-white min-h-screen">
-      <DocsSidebar activeSection={activeSection} onSectionClick={setActiveSection} />
+      <DocsSidebar 
+        docType="pos"
+        activeSection={activeSection} 
+        onSectionClick={setActiveSection} 
+      />
       <main className="flex-1 p-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-black mb-6">E-commerce Documentation</h1>
