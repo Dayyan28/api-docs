@@ -23,10 +23,15 @@ const POSDocsPage = () => {
       try {
         const files = [
           '/docs/pos/_pos_overview.md',
+          '/docs/pos/_pos_dual_messaging.md',
+          '/docs/pos/_pos_models.md',
           '/docs/pos/_pos_api.md',
           '/docs/pos/_pos_transaction.md',
-          '/docs/pos/_pos_refund.md',
-          '/docs/pos/_pos_bills.md'
+          '/docs/pos/_pos_advise.md',
+          '/docs/pos/_pos_vas_token.md',
+          '/docs/pos/_pos_history.md',
+          '/docs/pos/_pos_bills.md',
+          '/docs/pos/_pos_objects.md'
         ];
 
         const contents = await Promise.all(files.map(file => loadMarkdownFile(file)));
@@ -40,36 +45,10 @@ const POSDocsPage = () => {
     loadContent();
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!contentRef.current) return;
-
-      const sections = contentRef.current.querySelectorAll('h1, h2, h3');
-      let currentSection = '';
-
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 100) {
-          const sectionId = section.id || section.textContent?.toLowerCase().replace(/\s+/g, '-') || '';
-          if (sectionId) {
-            currentSection = sectionId;
-          }
-        }
-      });
-
-      if (currentSection && currentSection !== activeSection) {
-        setActiveSection(currentSection);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
-
   const handleSectionClick = (sectionId: string) => {
     const element = document.getElementById(sectionId) || 
                    document.querySelector(`[data-section="${sectionId}"]`) ||
-                   document.querySelector(`h1, h2, h3`);
+                   document.querySelector(`h2[id="${sectionId}"]`);
 
     if (element) {
       const headerOffset = 80;
