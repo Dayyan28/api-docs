@@ -22,7 +22,7 @@ const CVSDocsPage = () => {
       />
       <main className="flex-1 p-8 overflow-y-auto bg-white">
         <div className="max-w-4xl mx-auto">
-          <MarkdownRenderer docType="cvs" />
+          <MarkdownRenderer content="" />
         </div>
       </main>
     </div>

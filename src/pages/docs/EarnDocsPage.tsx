@@ -8,6 +8,7 @@ const EarnDocsPage = () => {
   return (
     <div className="flex bg-white min-h-screen">
       <DocsSidebar 
+        docType="earn"
         activeSection={activeSection} 
         onSectionClick={setActiveSection} 
       />

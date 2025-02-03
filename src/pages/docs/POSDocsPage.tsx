@@ -77,6 +77,7 @@ const POSDocsPage = () => {
     <div className="min-h-screen bg-white">
       <div className="flex">
         <DocsSidebar 
+          docType="pos"
           activeSection={activeSection}
           onSectionClick={handleSectionClick}
         />

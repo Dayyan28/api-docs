@@ -1,4 +1,3 @@
-// ... Same structure as POSDocsPage.tsx, but with VSP-specific file paths:
 import { useEffect, useState } from 'react';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { loadMarkdownFile } from '@/utils/markdown';
@@ -43,7 +42,6 @@ const VSPDocsPage = () => {
     request?: string;
     response?: string;
   }) => {
-    console.log('Code block detected:', codeBlock);
     setActiveCodeExample(codeBlock);
   };
 
@@ -52,6 +50,7 @@ const VSPDocsPage = () => {
       <div className="flex">
         <div className="w-64 h-screen sticky top-0 overflow-y-auto border-r border-gray-200">
           <DocsSidebar 
+            docType="vsp"
             activeSection={activeSection}
             onSectionClick={(sectionId) => {
               setActiveSection(sectionId);
