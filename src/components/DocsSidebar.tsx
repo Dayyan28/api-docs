@@ -12,110 +12,156 @@ interface NavItem {
   children?: NavItem[];
 }
 
-const posNavigation: NavItem[] = [
+const cvsNavigation: NavItem[] = [
   {
     id: 'overview',
-    title: 'Overview - Point of Sale',
+    title: 'Overview - CVS',
     children: [
-      { id: 'transaction-types', title: 'Transaction Types' },
-      { id: 'platform-architecture', title: 'Platform Architecture' },
-      { id: 'transactional-process-flow', title: 'Transactional Process Flow' }
+      { id: 'coupons-and-vouchers', title: 'Coupons and Vouchers' },
+      { id: 'gift-cards', title: 'Gift Cards' }
     ]
   },
   {
-    id: 'dual-messaging',
-    title: 'Dual Messaging'
-  },
-  {
-    id: 'integration-models',
-    title: 'Integration Models',
+    id: 'cvs-web-portal',
+    title: 'CVS Web Portal',
     children: [
-      { id: 'over-the-counter', title: 'Over the Counter Model' },
-      { id: 'sit-down', title: 'Sit Down Model' }
+      { id: 'integrations-environment-url', title: 'Integrations Environment URL' }
     ]
   },
   {
-    id: 'mobile-discount',
-    title: 'Mobile Discount / Payment Split'
-  },
-  {
-    id: 'pos-provider-soap',
-    title: 'POS Provider SOAP API',
+    id: 'cvs-issuer-rest-api',
+    title: 'CVS Issuer REST API',
     children: [
-      { id: 'header-parameters', title: 'Header Parameters' },
-      { id: 'wsdl-url', title: 'WSDL URL' },
-      { id: 'monetary-values', title: 'Monetary Values' },
-      { id: 'versioning', title: 'Versioning' }
+      { id: 'date-format', title: 'Date Format' },
+      { id: 'monetary-format', title: 'Monetary Format' },
+      { id: 'paginated-collections', title: 'Paginated Collections' },
+      { id: 'api-credentials', title: 'API Credentials' }
     ]
   },
   {
-    id: 'transaction',
-    title: 'Transaction',
+    id: 'couponcampaigns',
+    title: '/couponcampaigns',
     children: [
-      { id: 'transaction-request', title: 'Transaction Request' },
-      { id: 'transaction-response', title: 'Transaction Response' }
+      { id: 'get-couponcampaigns', title: 'GET /couponcampaigns' },
+      { id: 'get-couponcampaigns-id', title: 'GET /couponcampaigns/{campaignId}' },
+      { id: 'get-couponcampaigns-skus', title: 'GET /couponcampaigns/{campaignId}/skus' }
     ]
   },
   {
-    id: 'advice',
-    title: 'Advice',
+    id: 'coupons',
+    title: '/coupons',
     children: [
-      { id: 'advice-request', title: 'Advice Request' },
-      { id: 'advice-response', title: 'Advice Response' }
+      { id: 'post-coupons', title: 'POST /coupons' },
+      { id: 'get-coupons-id', title: 'GET /coupons/{id}' },
+      { id: 'delete-coupons-id', title: 'DELETE /coupons/{id}' }
     ]
   },
   {
-    id: 'vas-token',
-    title: 'VAS Token',
+    id: 'coupontransactions',
+    title: '/coupontransactions',
     children: [
-      { id: 'vas-token-request', title: 'Get VAS Token Request' },
-      { id: 'vas-token-response', title: 'Get VAS Token Response' }
+      { id: 'get-coupontransactions', title: 'GET /coupontransactions' },
+      { id: 'get-coupontransactions-id', title: 'GET /coupontransactions/{id}' }
     ]
   },
   {
-    id: 'transaction-history',
-    title: 'Transaction History',
+    id: 'giftcardcampaigns',
+    title: '/giftcardcampaigns',
     children: [
-      { id: 'history-request', title: 'Transaction History Request' },
-      { id: 'history-response', title: 'Transaction History Response' }
+      { id: 'get-giftcardcampaigns', title: 'GET /giftcardcampaigns' },
+      { id: 'get-giftcardcampaigns-id', title: 'GET /giftcardcampaigns/{id}' }
     ]
   },
   {
-    id: 'bills',
-    title: 'Bills',
+    id: 'giftcards',
+    title: '/giftcards',
     children: [
-      { id: 'create-bill', title: 'Create Bill' },
-      { id: 'get-bill', title: 'Get Bill' }
+      { id: 'post-giftcards', title: 'POST /giftcards' },
+      { id: 'post-giftcards-wicode', title: 'POST /giftcards/{id}/wicode' },
+      { id: 'get-giftcards-id', title: 'GET /giftcards/{id}' },
+      { id: 'delete-giftcards-id', title: 'DELETE /giftcards/{id}' }
     ]
   },
   {
-    id: 'objects',
-    title: 'Objects',
+    id: 'giftcardtransactions',
+    title: '/giftcardtransactions',
     children: [
-      { id: 'api-credentials', title: 'API Credentials' },
-      { id: 'product', title: 'Product' },
-      { id: 'store-transaction-details', title: 'Store Transaction Details' },
-      { id: 'token', title: 'Token' },
-      { id: 'vsp', title: 'VSP' },
-      { id: 'discount', title: 'Discount' },
-      { id: 'discount-product', title: 'Discount Product' },
-      { id: 'loyalty', title: 'Loyalty' },
-      { id: 'original-transaction-details', title: 'Original Transaction Details' },
-      { id: 'transactions', title: 'Transactions' },
-      { id: 'basket', title: 'Basket' }
+      { id: 'get-giftcardtransactions', title: 'GET /giftcardtransactions' },
+      { id: 'get-giftcardtransactions-id', title: 'GET /giftcardtransactions/{id}' }
     ]
   },
   {
-    id: 'response-codes',
-    title: 'Response Codes',
+    id: 'campaigns',
+    title: '/campaigns',
     children: [
-      { id: 'transaction-engine-codes', title: 'Transaction Engine' },
-      { id: 'bill-server-codes', title: 'Bill Server' }
+      { id: 'get-campaigns-metadata', title: 'GET /campaigns/{campaignId}/metadata' }
+    ]
+  },
+  {
+    id: 'users',
+    title: '/users',
+    children: [
+      { id: 'post-user-token', title: 'POST /user/{userRef}/token' },
+      { id: 'get-user-token', title: 'GET /user/{userRef}/token' },
+      { id: 'delete-user-token', title: 'DELETE /user/{userRef}/token' },
+      { id: 'get-users-transactions', title: 'GET /users/{userRef}/transactions' },
+      { id: 'get-users-coupons', title: 'GET /users/{userRef}/coupons' },
+      { id: 'get-users-giftcards', title: 'GET /users/{userRef}/giftcards' },
+      { id: 'get-users-pans', title: 'GET /users/{userRef}/pans' }
+    ]
+  },
+  {
+    id: 'retailers',
+    title: '/retailers',
+    children: [
+      { id: 'get-retailers', title: 'GET /retailers' }
+    ]
+  },
+  {
+    id: 'merchants',
+    title: '/merchants',
+    children: [
+      { id: 'get-merchants', title: 'GET /merchants' }
+    ]
+  },
+  {
+    id: 'transactions',
+    title: '/transactions',
+    children: [
+      { id: 'get-transactions', title: 'GET /transactions' },
+      { id: 'get-transactions-id', title: 'GET /transactions/{id}' }
+    ]
+  },
+  {
+    id: 'redemption-callback',
+    title: 'Redemption Callback',
+    children: [
+      { id: 'redemption-callback-failure', title: 'Redemption Callback Failure' },
+      { id: 'webhook-url', title: 'Webhook URL' }
     ]
   },
   {
     id: 'test-cases',
     title: 'Test Cases'
+  },
+  {
+    id: 'response-codes',
+    title: 'Response Codes'
+  },
+  {
+    id: 'faqs',
+    title: "FAQ's",
+    children: [
+      { id: 'faq-api-credentials', title: 'Testing API Credentials' },
+      { id: 'faq-portal-credentials', title: 'Web Portal Login Credentials' },
+      { id: 'faq-campaign-signoff', title: 'Campaign Sign-off in QA' },
+      { id: 'faq-redemption-params', title: 'Redemption Callback Parameters' },
+      { id: 'faq-expiry-time', title: 'Coupon/Voucher Expiry Time' },
+      { id: 'faq-giftcard-limit', title: 'Giftcard Limit on GET Call' },
+      { id: 'faq-sms-params', title: 'Custom SMS Message Parameters' },
+      { id: 'faq-wicode-types', title: 'Open vs Merged wiCodes' },
+      { id: 'faq-missing-wicode', title: 'Missing wiCode on Coupon Issue' }
+    ]
   }
 ];
 
@@ -123,7 +169,7 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
   const [expanded, setExpanded] = useState<string[]>(['overview']);
 
   useEffect(() => {
-    const activeParent = posNavigation.find(section => 
+    const activeParent = cvsNavigation.find(section => 
       section.children?.some(child => child.id === activeSection)
     );
     if (activeParent && !expanded.includes(activeParent.id)) {
@@ -184,10 +230,10 @@ export const DocsSidebar = ({ activeSection, onSectionClick }: DocsSidebarProps)
   return (
     <nav className="w-64 h-screen overflow-y-auto px-4 py-6 border-r border-gray-200 bg-white">
       <div className="mb-8">
-        <h1 className="text-xl font-bold text-primary-dark-teal mb-1">POS API Docs</h1>
+        <h1 className="text-xl font-bold text-primary-dark-teal mb-1">CVS API Docs</h1>
         <p className="text-sm text-gray-600">v1.0.0</p>
       </div>
-      {renderNavItems(posNavigation)}
+      {renderNavItems(cvsNavigation)}
     </nav>
   );
 };
