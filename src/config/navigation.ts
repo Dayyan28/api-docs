@@ -117,6 +117,57 @@ const vspNavigation: NavItem[] = [
   }
 ];
 
+// Temporary placeholder navigations until final structures are provided
+const cvsNavigation: NavItem[] = [
+  {
+    id: "overview",
+    title: "Overview - CVS",
+    children: [
+      { id: "introduction", title: "Introduction" }
+    ]
+  }
+];
+
+const posNavigation: NavItem[] = [
+  {
+    id: "overview",
+    title: "Overview - POS",
+    children: [
+      { id: "introduction", title: "Introduction" }
+    ]
+  }
+];
+
+const loyaltyNavigation: NavItem[] = [
+  {
+    id: "overview",
+    title: "Overview - Loyalty",
+    children: [
+      { id: "introduction", title: "Introduction" }
+    ]
+  }
+];
+
+const earnNavigation: NavItem[] = [
+  {
+    id: "overview",
+    title: "Overview - Earn",
+    children: [
+      { id: "introduction", title: "Introduction" }
+    ]
+  }
+];
+
+const ecommerceNavigation: NavItem[] = [
+  {
+    id: "overview",
+    title: "Overview - Ecommerce",
+    children: [
+      { id: "introduction", title: "Introduction" }
+    ]
+  }
+];
+
 export const getNavigationByType = (type: string): NavItem[] => {
   switch (type.toLowerCase()) {
     case 'vsp':
