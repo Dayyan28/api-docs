@@ -273,10 +273,107 @@ const cvsNavigation: NavItem[] = [
 const posNavigation: NavItem[] = [
   {
     id: "overview",
-    title: "Overview - POS",
+    title: "Overview - Point of Sale",
     children: [
-      { id: "introduction", title: "Introduction" }
+      { id: "transaction-types", title: "Transaction Types" },
+      { id: "platform-architecture", title: "Platform Architecture" },
+      { id: "transactional-flow", title: "Transactional Process Flow" }
     ]
+  },
+  {
+    id: "dual-messaging",
+    title: "Dual Messaging"
+  },
+  {
+    id: "integration-models",
+    title: "Integration Models",
+    children: [
+      { id: "over-counter-model", title: "Over the Counter Model" },
+      { id: "sit-down-model", title: "Sit Down Model" }
+    ]
+  },
+  {
+    id: "mobile-discount",
+    title: "Mobile Discount / Payment Split"
+  },
+  {
+    id: "pos-soap-api",
+    title: "POS Provider SOAP API",
+    children: [
+      { id: "header-parameters", title: "Header Parameters" },
+      { id: "wsdl-url", title: "WSDL URL" },
+      { id: "monetary-values", title: "Monetary Values" },
+      { id: "versioning", title: "Versioning" }
+    ]
+  },
+  {
+    id: "transaction",
+    title: "Transaction",
+    children: [
+      { id: "transaction-request", title: "Transaction Request" },
+      { id: "transaction-response", title: "Transaction Response" }
+    ]
+  },
+  {
+    id: "advice",
+    title: "Advice",
+    children: [
+      { id: "advice-request", title: "Advice Request" },
+      { id: "advice-response", title: "Advice Response" }
+    ]
+  },
+  {
+    id: "vas-token",
+    title: "VAS Token",
+    children: [
+      { id: "get-vas-token-request", title: "Get VAS Token Request" },
+      { id: "get-vas-token-response", title: "Get VAS Token Response" }
+    ]
+  },
+  {
+    id: "transaction-history",
+    title: "Transaction History",
+    children: [
+      { id: "transaction-history-request", title: "Transaction History Request" },
+      { id: "transaction-history-response", title: "Transaction History Response" }
+    ]
+  },
+  {
+    id: "bills",
+    title: "Bills",
+    children: [
+      { id: "create-bill", title: "Create Bill" },
+      { id: "get-bill", title: "Get Bill" }
+    ]
+  },
+  {
+    id: "objects",
+    title: "Objects",
+    children: [
+      { id: "api-credentials", title: "API Credentials" },
+      { id: "product", title: "Product" },
+      { id: "store-transaction-details", title: "Store Transaction Details" },
+      { id: "token", title: "Token" },
+      { id: "vsp", title: "VSP" },
+      { id: "discount", title: "Discount" },
+      { id: "discount-product", title: "Discount Product" },
+      { id: "loyalty", title: "Loyalty" },
+      { id: "original-transaction-details", title: "Original Transaction Details" },
+      { id: "transactions", title: "Transactions" },
+      { id: "basket", title: "Basket" }
+    ]
+  },
+  {
+    id: "response-codes",
+    title: "Response Codes",
+    children: [
+      { id: "transaction-engine-codes", title: "Transaction Engine" },
+      { id: "bill-server-codes", title: "Bill Server" }
+    ]
+  },
+  {
+    id: "test-cases",
+    title: "Test Cases"
   }
 ];
 
