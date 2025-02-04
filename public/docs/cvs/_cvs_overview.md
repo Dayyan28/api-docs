@@ -1,3 +1,4 @@
+
 # Overview - Coupon, Voucher and Giftcard Service
 
 The CVS platform enables enterprises to issue and manage digital rewards in the form of coupons, vouchers, and gift cards. These can be redeemed at integrated point-of-sale (POS) systems.
@@ -5,115 +6,136 @@ The CVS platform enables enterprises to issue and manage digital rewards in the 
 ## Issue a Coupon
 
 ```json
+# Example request
+
+curl "https://za-vsp-int.wigroup.co/cvs-issuer/rest/coupons?issueWiCode=true" \
+  -H "apiId: {apiId}" \
+  -H "apiPassword: {apiPassword}" \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '{
+    "campaignId": "CAMP123",
+    "userRef": "CUST456",
+    "mobileNumber": "+27820000000",
+    "smsMessage": "Your discount coupon is ready!",
+    "sendSMS": true
+}'
+
+# Example response
+
 {
-    "campaign": {
-        "id": "CAMP123",
-        "name": "Summer Promotion"
-    },
-    "customer": {
-        "reference": "CUST456",
-        "mobile": "+27820000000",
-        "email": "customer@example.com"
-    },
     "coupon": {
-        "value": 5000,  // 50.00 in cents
+        "id": 171117,
+        "wicode": "123456789",
+        "type": "COUPON",
+        "value": 5000,
         "expiryDate": "2024-12-31T23:59:59+0200",
-        "products": [
-            {
-                "id": "PROD001",
-                "name": "Coffee"
-            }
-        ]
-    }
+        "status": "ACTIVE",
+        "campaign": {
+            "id": "CAMP123",
+            "name": "Summer Promotion"
+        },
+        "customer": {
+            "reference": "CUST456"
+        }
+    },
+    "responseCode": "-1",
+    "responseDesc": "Success"
 }
 ```
-
 
 ## Issue a Voucher
 
 ```json
+# Example request
+
+curl "https://za-vsp-int.wigroup.co/cvs-issuer/rest/vouchers" \
+  -H "apiId: {apiId}" \
+  -H "apiPassword: {apiPassword}" \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '{
+    "campaignId": "CAMP789",
+    "userRef": "CUST456",
+    "mobileNumber": "+27820000000",
+    "value": 10000,
+    "type": "FIXED_VALUE"
+}'
+
+# Example response
+
 {
-    "campaign": {
-        "id": "CAMP789",
-        "name": "Welcome Bonus"
-    },
-    "customer": {
-        "reference": "CUST456",
-        "mobile": "+27820000000"
-    },
     "voucher": {
-        "value": 10000,  // 100.00 in cents
+        "id": 171118,
+        "wicode": "987654321",
+        "type": "VOUCHER",
+        "value": 10000,
         "expiryDate": "2024-12-31T23:59:59+0200",
-        "type": "FIXED_VALUE"
-    }
+        "status": "ACTIVE",
+        "campaign": {
+            "id": "CAMP789",
+            "name": "Welcome Bonus"
+        },
+        "customer": {
+            "reference": "CUST456"
+        }
+    },
+    "responseCode": "-1",
+    "responseDesc": "Success"
 }
 ```
-
 
 ## Issue a Gift Card
 
 ```json
+# Example request
+
+curl "https://za-vsp-int.wigroup.co/cvs-issuer/rest/giftcards" \
+  -H "apiId: {apiId}" \
+  -H "apiPassword: {apiPassword}" \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '{
+    "campaignId": "CAMP101",
+    "userRef": "CUST456",
+    "mobileNumber": "+27820000000",
+    "balance": 50000,
+    "message": "Happy Birthday!",
+    "sendSMS": true
+}'
+
+# Example response
+
 {
-    "campaign": {
-        "id": "CAMP101",
-        "name": "Digital Gift Card"
-    },
-    "customer": {
-        "reference": "CUST456",
-        "mobile": "+27820000000",
-        "email": "customer@example.com"
-    },
-    "giftCard": {
-        "value": 50000,  // 500.00 in cents
+    "giftcard": {
+        "id": 171119,
+        "wicode": "456789123",
+        "type": "GIFTCARD",
+        "balance": 50000,
         "expiryDate": "2025-12-31T23:59:59+0200",
-        "message": "Happy Birthday!",
-        "sender": {
-            "name": "John Doe",
-            "email": "john@example.com"
+        "status": "ACTIVE",
+        "campaign": {
+            "id": "CAMP101",
+            "name": "Digital Gift Card"
+        },
+        "customer": {
+            "reference": "CUST456"
         }
-    }
-}
-```
-
-## Response Examples
-
-### Success Response
-```json
-{
-    "wicode": "123456789",
-    "type": "COUPON",  // or "VOUCHER" or "GIFTCARD"
-    "value": 5000,
-    "expiryDate": "2024-12-31T23:59:59+0200",
-    "status": "ACTIVE",
-    "campaign": {
-        "id": "CAMP123",
-        "name": "Summer Promotion"
     },
-    "customer": {
-        "reference": "CUST456"
-    }
+    "responseCode": "-1",
+    "responseDesc": "Success"
 }
 ```
 
-### Error Response
-```json
-{
-    "error": {
-        "code": "CVS_001",
-        "message": "Invalid campaign ID",
-        "details": "The specified campaign does not exist or has expired"
-    }
-}
-```
+## Common Response Codes
 
-## Common Error Codes
-
-- `CVS_001`: Invalid campaign ID
-- `CVS_002`: Invalid customer reference
-- `CVS_003`: Invalid value amount
-- `CVS_004`: Campaign expired
-- `CVS_005`: Campaign limit reached
-- `AUTH_001`: Invalid API credentials
+- `-1`: Success
+- `1`: Invalid campaign ID
+- `2`: Invalid customer reference
+- `3`: Invalid value amount
+- `4`: Campaign expired
+- `5`: Campaign limit reached
+- `100`: Authentication failed
 
 ## Best Practices
 
