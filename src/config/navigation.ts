@@ -117,13 +117,155 @@ const vspNavigation: NavItem[] = [
   }
 ];
 
-// Temporary placeholder navigations until final structures are provided
 const cvsNavigation: NavItem[] = [
   {
     id: "overview",
-    title: "Overview - CVS",
+    title: "Overview - Coupon, Voucher and Gift Card Service",
     children: [
-      { id: "introduction", title: "Introduction" }
+      { id: "coupons-and-vouchers", title: "Coupons and Vouchers" },
+      { id: "gift-cards", title: "Gift Cards" }
+    ]
+  },
+  {
+    id: "cvs-web-portal",
+    title: "CVS Web Portal",
+    children: [
+      { id: "integrations-environment-url", title: "Integrations Environment URL" }
+    ]
+  },
+  {
+    id: "cvs-issuer-rest-api",
+    title: "CVS Issuer REST API",
+    children: [
+      { id: "date-format", title: "Date Format" },
+      { id: "monetary-format", title: "Monetary Format" },
+      { id: "paginated-collections", title: "Paginated Collections" },
+      { id: "api-credentials", title: "API Credentials" }
+    ]
+  },
+  {
+    id: "couponcampaigns",
+    title: "/couponcampaigns",
+    children: [
+      { id: "get-couponcampaigns", title: "GET /couponcampaigns" },
+      { id: "get-couponcampaigns-id", title: "GET /couponcampaigns/{campaignId}" },
+      { id: "get-couponcampaigns-skus", title: "GET /couponcampaigns/{campaignId}/skus" }
+    ]
+  },
+  {
+    id: "coupons",
+    title: "/coupons",
+    children: [
+      { id: "post-coupons", title: "POST /coupons" },
+      { id: "get-coupons-id", title: "GET /coupons/{id}" },
+      { id: "delete-coupons-id", title: "DELETE /coupons/{id}" }
+    ]
+  },
+  {
+    id: "coupontransactions",
+    title: "/coupontransactions",
+    children: [
+      { id: "get-coupontransactions", title: "GET /coupontransactions" },
+      { id: "get-coupontransactions-id", title: "GET /coupontransactions/{id}" }
+    ]
+  },
+  {
+    id: "giftcardcampaigns",
+    title: "/giftcardcampaigns",
+    children: [
+      { id: "get-giftcardcampaigns", title: "GET /giftcardcampaigns" },
+      { id: "get-giftcardcampaigns-id", title: "GET /giftcardcampaigns/{id}" }
+    ]
+  },
+  {
+    id: "giftcards",
+    title: "/giftcards",
+    children: [
+      { id: "post-giftcards", title: "POST /giftcards" },
+      { id: "post-giftcards-wicode", title: "POST /giftcards/{id}/wicode" },
+      { id: "get-giftcards-id", title: "GET /giftcards/{id}" },
+      { id: "delete-giftcards-id", title: "DELETE /giftcards/{id}" }
+    ]
+  },
+  {
+    id: "giftcardtransactions",
+    title: "/giftcardtransactions",
+    children: [
+      { id: "get-giftcardtransactions", title: "GET /giftcardtransactions" },
+      { id: "get-giftcardtransactions-id", title: "GET /giftcardtransactions/{id}" }
+    ]
+  },
+  {
+    id: "campaigns",
+    title: "/campaigns",
+    children: [
+      { id: "get-campaigns-metadata", title: "GET /campaigns/{campaignId}/metadata" }
+    ]
+  },
+  {
+    id: "users",
+    title: "/users",
+    children: [
+      { id: "post-user-token", title: "POST /user/{userRef}/token" },
+      { id: "get-user-token", title: "GET /user/{userRef}/token" },
+      { id: "delete-user-token", title: "DELETE /user/{userRef}/token" },
+      { id: "get-users-transactions", title: "GET /users/{userRef}/transactions" },
+      { id: "get-users-coupons", title: "GET /users/{userRef}/coupons" },
+      { id: "get-users-giftcards", title: "GET /users/{userRef}/giftcards" },
+      { id: "get-users-pans", title: "GET /users/{userRef}/pans" }
+    ]
+  },
+  {
+    id: "retailers",
+    title: "/retailers",
+    children: [
+      { id: "get-retailers", title: "GET /retailers" }
+    ]
+  },
+  {
+    id: "merchants",
+    title: "/merchants",
+    children: [
+      { id: "get-merchants", title: "GET /merchants" }
+    ]
+  },
+  {
+    id: "transactions",
+    title: "/transactions",
+    children: [
+      { id: "get-transactions", title: "GET /transactions" },
+      { id: "get-transactions-id", title: "GET /transactions/{id}" }
+    ]
+  },
+  {
+    id: "redemption-callback",
+    title: "Redemption Callback",
+    children: [
+      { id: "redemption-callback-failure", title: "Redemption Callback Failure" },
+      { id: "webhook-url", title: "Webhook URL" }
+    ]
+  },
+  {
+    id: "test-cases",
+    title: "Test Cases"
+  },
+  {
+    id: "response-codes",
+    title: "Response Codes"
+  },
+  {
+    id: "faqs",
+    title: "FAQ's",
+    children: [
+      { id: "faq-testing-credentials", title: "Where can I find my testing API credentials?" },
+      { id: "faq-portal-credentials", title: "Where do I get my Web Portal login credentials?" },
+      { id: "faq-qa-signoff", title: "How do I get my campaigns signed-off in the QA environment?" },
+      { id: "faq-callback-parameters", title: "What parameters get sent with the redemption callback?" },
+      { id: "faq-expiry-time", title: "How do I set the expiry time for a coupon/voucher on issue?" },
+      { id: "faq-giftcards-limit", title: "Why do I only see 20 giftcards on the GET /giftcards/{id} API call when I know the user has 50?" },
+      { id: "faq-sms-parameters", title: "What are the content parameters to use when creating a custom SMS message with the API call?" },
+      { id: "faq-wicode-types", title: "What is the difference between an Open and a Merged wiCode?" },
+      { id: "faq-missing-wicode", title: "I am issuing coupons but I am not receiving a wiCode with them." }
     ]
   }
 ];
