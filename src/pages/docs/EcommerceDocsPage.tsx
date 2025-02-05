@@ -2,10 +2,17 @@ import { useState, useEffect } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { loadMarkdownFile } from '@/utils/markdown';
+import { CodeBlock } from '@/components/CodeBlock';
 
 const EcommerceDocsPage = () => {
-  const [activeSection, setActiveSection] = useState('overview');
   const [content, setContent] = useState('');
+  const [activeSection, setActiveSection] = useState('overview');
+  const [activeCodeExample, setActiveCodeExample] = useState<{
+    method?: string;
+    endpoint?: string;
+    request?: string;
+    response?: string;
+  } | null>(null);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -36,16 +43,39 @@ const EcommerceDocsPage = () => {
 
   return (
     <div className="flex bg-white min-h-screen">
-      <DocsSidebar 
-        docType="ecommerce"
-        activeSection={activeSection} 
-        onSectionClick={handleSectionClick} 
-      />
-      <main className="flex-1 p-8 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <MarkdownRenderer content={content} />
+      <div className="docs-sidebar">
+        <DocsSidebar 
+          docType="ecommerce"
+          activeSection={activeSection}
+          onSectionClick={handleSectionClick}
+        />
+      </div>
+      
+      <div className="docs-content">
+        <MarkdownRenderer 
+          content={content}
+          onCodeBlockVisible={setActiveCodeExample}
+        />
+      </div>
+
+      <div className="docs-code-panel">
+        <div className="rounded-lg bg-gray-100 p-4">
+          <h3 className="text-sm font-semibold mb-2">Code Example</h3>
+          {activeCodeExample ? (
+            <CodeBlock
+              method={activeCodeExample.method || ''}
+              endpoint={activeCodeExample.endpoint || ''}
+              request={activeCodeExample.request}
+              response={activeCodeExample.response}
+              isVisible={true}
+            />
+          ) : (
+            <p className="text-gray-500 text-sm">
+              Scroll through the documentation to see code examples here
+            </p>
+          )}
         </div>
-      </main>
+      </div>
     </div>
   );
 };
