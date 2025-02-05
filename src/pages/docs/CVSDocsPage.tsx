@@ -55,7 +55,7 @@ const CVSDocsPage = () => {
   };
 
   return (
-    <div className="flex bg-white min-h-screen">
+    <div className="flex min-h-screen bg-white">
       <div className="docs-sidebar">
         <DocsSidebar 
           docType="cvs"
@@ -72,8 +72,8 @@ const CVSDocsPage = () => {
       </div>
 
       <div className="docs-code-panel">
-        <div className="rounded-lg bg-gray-100 p-4">
-          <h3 className="text-sm font-semibold mb-2">Code Example</h3>
+        <div className="rounded-lg bg-docsbg p-4 h-full">
+          <h3 className="text-sm font-semibold mb-2 text-white">Code Example</h3>
           {activeCodeExample ? (
             <CodeBlock
               method={activeCodeExample.method || ''}
@@ -83,7 +83,7 @@ const CVSDocsPage = () => {
               isVisible={true}
             />
           ) : (
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-400 text-sm">
               Scroll through the documentation to see code examples here
             </p>
           )}
