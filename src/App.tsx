@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,10 +18,10 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
+        <Header />
         <div className="min-h-screen bg-primary-dark-teal">
           <Toaster />
           <Sonner />
-          <Header />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/docs/cvs" element={<CVSDocsPage />} />
