@@ -56,39 +56,39 @@ const CVSDocsPage = () => {
 
   return (
     <div className="flex min-h-screen bg-white">
-      <div className="docs-sidebar">
-        <DocsSidebar 
-          docType="cvs"
-          activeSection={activeSection}
-          onSectionClick={handleSectionClick}
-        />
-      </div>
+      <DocsSidebar 
+        docType="cvs"
+        activeSection={activeSection}
+        onSectionClick={handleSectionClick}
+      />
       
-      <div className="docs-content">
-        <MarkdownRenderer 
-          content={content}
-          onCodeBlockVisible={setActiveCodeExample}
-        />
-      </div>
-
-      <div className="docs-code-panel">
-        <div className="rounded-lg bg-docsbg p-4 h-full">
-          <h3 className="text-sm font-semibold mb-2 text-white">Code Example</h3>
-          {activeCodeExample ? (
-            <CodeBlock
-              method={activeCodeExample.method || ''}
-              endpoint={activeCodeExample.endpoint || ''}
-              request={activeCodeExample.request}
-              response={activeCodeExample.response}
-              isVisible={true}
-            />
-          ) : (
-            <p className="text-gray-400 text-sm">
-              Scroll through the documentation to see code examples here
-            </p>
-          )}
+      <main className="flex-1 flex">
+        <div className="docs-content">
+          <MarkdownRenderer 
+            content={content}
+            onCodeBlockVisible={setActiveCodeExample}
+          />
         </div>
-      </div>
+
+        <div className="docs-code-panel">
+          <div className="rounded-lg bg-docsbg p-4 h-full">
+            <h3 className="text-sm font-semibold mb-2 text-white">Code Example</h3>
+            {activeCodeExample ? (
+              <CodeBlock
+                method={activeCodeExample.method || ''}
+                endpoint={activeCodeExample.endpoint || ''}
+                request={activeCodeExample.request}
+                response={activeCodeExample.response}
+                isVisible={true}
+              />
+            ) : (
+              <p className="text-gray-400 text-sm">
+                Scroll through the documentation to see code examples here
+              </p>
+            )}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

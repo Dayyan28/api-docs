@@ -65,7 +65,8 @@
 
 .docs-content {
   @apply prose max-w-none overflow-y-auto h-[calc(100vh-2rem)] px-6 py-6;
-  width: calc(100% - 512px); /* Accounts for sidebar and code panel */
+  width: calc(100vw - 576px); /* 256px for sidebar + 320px for code panel */
+  flex: 1;
 }
 
 .docs-sidebar {
@@ -73,5 +74,5 @@
 }
 
 .docs-code-panel {
-  @apply w-[320px] h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4 shrink-0;
+  @apply w-[320px] h-screen sticky top-0 overflow-y-auto bg-docsbg p-4 shrink-0;
 }
