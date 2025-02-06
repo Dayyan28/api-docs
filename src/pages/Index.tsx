@@ -1,7 +1,8 @@
+
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, DollarSign, Store, CreditCard, Star, PieChart, Facebook, Linkedin, Instagram } from "lucide-react";
+import { Heart, DollarSign, Store, CreditCard, Star, PieChart } from "lucide-react";
 
 const documentationSections = [
   {
@@ -147,49 +148,128 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-deep-teal text-secondary-cream py-16">
+      <footer className="bg-[#00313C] text-white py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-16">
+            {/* Logo Column */}
             <div>
               <img src="/logo.png" alt="YoYo Group Logo" className="h-8 mb-4" />
-              <p className="text-secondary-blue">
-                Attract. Engage. Retain. Grow.
-              </p>
             </div>
+
+            {/* Company Column */}
             <div>
-              <h3 className="font-semibold mb-4">Products</h3>
-              <ul className="space-y-2 text-secondary-blue">
-                <li><Link to="/docs/cvs" className="hover:text-primary-orange">CVS</Link></li>
-                <li><Link to="/docs/pos" className="hover:text-primary-orange">POS Integration</Link></li>
-                <li><Link to="/docs/vsp" className="hover:text-primary-orange">VSP</Link></li>
-                <li><Link to="/docs/loyalty" className="hover:text-primary-orange">Loyalty</Link></li>
+              <h3 className="text-lg font-semibold mb-6">Company</h3>
+              <ul className="space-y-4">
+                <li>
+                  <a href="https://yoyogroup.com/about/" target="_blank" rel="noopener noreferrer" 
+                     className="text-gray-300 hover:text-white transition-colors">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="https://yoyogroup.com/careers/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Careers
+                  </a>
+                </li>
               </ul>
             </div>
+
+            {/* Products Column */}
             <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-secondary-blue">
-                <li><a href="https://yoyogroup.com/about/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-orange">About Us</a></li>
-                <li><a href="https://yoyogroup.com/careers/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-orange">Careers</a></li>
-                <li><a href="https://yoyogroup.com/contact/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-orange">Contact</a></li>
+              <h3 className="text-lg font-semibold mb-6">Products</h3>
+              <ul className="space-y-4">
+                <li>
+                  <a href="https://yoyogroup.com/yoyo-pro/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Yoyo Pro
+                  </a>
+                </li>
+                <li>
+                  <Link to="/docs/cvs" className="text-gray-300 hover:text-white transition-colors">
+                    Yoyo API
+                  </Link>
+                </li>
               </ul>
             </div>
+
+            {/* Contact Column */}
             <div>
-              <h3 className="font-semibold mb-4">Connect</h3>
-              <div className="flex space-x-4">
-                <a href="https://www.facebook.com/theyoyogroup.international" target="_blank" rel="noopener noreferrer" className="text-secondary-blue hover:text-primary-orange">
-                  <Facebook size={24} />
-                </a>
-                <a href="https://www.linkedin.com/company/the-yoyo-group/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="text-secondary-blue hover:text-primary-orange">
-                  <Linkedin size={24} />
-                </a>
-                <a href="https://www.instagram.com/theyoyogroup/" target="_blank" rel="noopener noreferrer" className="text-secondary-blue hover:text-primary-orange">
-                  <Instagram size={24} />
-                </a>
-              </div>
+              <h3 className="text-lg font-semibold mb-6">Contact</h3>
+              <ul className="space-y-4">
+                <li>
+                  <a href="https://yoyogroup.com/contact/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Contact us
+                  </a>
+                </li>
+                <li>
+                  <a href="https://yoyogroup.com/support/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Support
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal Column */}
+            <div>
+              <h3 className="text-lg font-semibold mb-6">Legal</h3>
+              <ul className="space-y-4">
+                <li>
+                  <a href="https://yoyogroup.com/user-terms/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    User terms
+                  </a>
+                </li>
+                <li>
+                  <a href="https://yoyogroup.com/privacy-notice/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Privacy notice
+                  </a>
+                </li>
+                <li>
+                  <a href="https://yoyogroup.com/cookies-policy/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Cookies policy
+                  </a>
+                </li>
+                <li>
+                  <a href="https://yoyogroup.com/complaints/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Complaints procedure
+                  </a>
+                </li>
+                <li>
+                  <a href="https://yoyogroup.com/merchant-terms/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Merchant terms
+                  </a>
+                </li>
+                <li>
+                  <a href="https://yoyogroup.com/safeguarding/" target="_blank" rel="noopener noreferrer"
+                     className="text-gray-300 hover:text-white transition-colors">
+                    Safeguarding Accounts
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
-          <div className="border-t border-secondary-teal/20 mt-12 pt-8 text-center text-secondary-blue">
-            <p>&copy; {new Date().getFullYear()} YoYo Group. All rights reserved.</p>
+
+          {/* Footer Bottom */}
+          <div className="flex items-center justify-between pt-8 border-t border-gray-700">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-400">© {new Date().getFullYear()} YoYo Group</span>
+              <img src="/logo.png" alt="YoYo Group" className="h-4" />
+            </div>
+            <a 
+              href="https://yoyogroup.com/sitemap/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-gray-400 hover:text-white transition-colors"
+            >
+              Sitemap
+            </a>
           </div>
         </div>
       </footer>
