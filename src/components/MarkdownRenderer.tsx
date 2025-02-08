@@ -1,4 +1,3 @@
-
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
@@ -11,7 +10,6 @@ import type { Components } from 'react-markdown';
 interface MarkdownRendererProps {
   content: string;
   className?: string;
-  renderJsonInline?: boolean;
   onCodeBlockVisible?: (codeBlock: {
     method?: string;
     endpoint?: string;
@@ -20,33 +18,13 @@ interface MarkdownRendererProps {
   }) => void;
 }
 
-export const MarkdownRenderer = ({ 
-  content, 
-  className, 
-  renderJsonInline = true,
-  onCodeBlockVisible 
-}: MarkdownRendererProps) => {
+export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: MarkdownRendererProps) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = async (code: string, index: number) => {
     await navigator.clipboard.writeText(code);
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);
-  };
-
-  const extractTechnicalExample = (content: string) => {
-    const methodMatch = content.match(/(?:GET|POST|PUT|DELETE)/);
-    const endpointMatch = content.match(/curl\s+"([^"]+)"/);
-    const sections = content.split(/# Example |#\s*Example /);
-    const requestSection = sections.find(section => section.toLowerCase().includes('request'));
-    const responseSection = sections.find(section => section.toLowerCase().includes('response'));
-
-    return {
-      method: methodMatch ? methodMatch[0] : undefined,
-      endpoint: endpointMatch ? endpointMatch[1] : undefined,
-      request: requestSection ? requestSection.trim() : undefined,
-      response: responseSection ? responseSection.trim() : undefined
-    };
   };
 
   const components: Components = {
@@ -63,16 +41,27 @@ export const MarkdownRenderer = ({
       if (!inline && match) {
         const codeContent = String(children);
         
-        if (match[1] === 'json') {
-          const example = extractTechnicalExample(codeContent);
-          
-          if (onCodeBlockVisible && !renderJsonInline) {
-            useEffect(() => {
-              onCodeBlockVisible(example);
-            }, []);
-            return null;
+        // Extract method from the first line that contains GET, POST, PUT, or DELETE
+        const methodMatch = codeContent.match(/(?:GET|POST|PUT|DELETE)/);
+        
+        // Extract endpoint from the URL in the curl command
+        const endpointMatch = codeContent.match(/curl\s+"([^"]+)"/);
+        
+        // Extract request and response sections
+        const sections = codeContent.split(/# Example |#\s*Example /);
+        const requestSection = sections.find(section => section.toLowerCase().includes('request'));
+        const responseSection = sections.find(section => section.toLowerCase().includes('response'));
+
+        useEffect(() => {
+          if (onCodeBlockVisible && (methodMatch || endpointMatch || requestSection || responseSection)) {
+            onCodeBlockVisible({
+              method: methodMatch ? methodMatch[0] : undefined,
+              endpoint: endpointMatch ? endpointMatch[1] : undefined,
+              request: requestSection ? requestSection.trim() : undefined,
+              response: responseSection ? responseSection.trim() : undefined
+            });
           }
-        }
+        }, []);
 
         return (
           <div className="relative my-4">
