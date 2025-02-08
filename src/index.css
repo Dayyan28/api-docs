@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
@@ -67,6 +68,32 @@
   @apply prose max-w-none overflow-y-auto h-[calc(100vh-2rem)] px-8 py-6;
   width: calc(100vw - 576px - 32px); /* 256px for sidebar + 320px for code panel + 32px for right margin */
   flex: 1;
+
+  /* Enhanced typography styles */
+  h1, h2, h3 {
+    @apply text-gray-900 font-semibold scroll-mt-20;
+  }
+
+  p {
+    @apply text-gray-600 leading-relaxed mb-4;
+  }
+
+  ul {
+    @apply my-4 list-disc list-inside;
+  }
+
+  li {
+    @apply text-gray-600 mb-2;
+  }
+
+  table {
+    @apply w-full border-collapse my-8;
+  }
+
+  /* Code examples are now hidden in the main content */
+  .language-json {
+    @apply hidden;
+  }
 }
 
 .docs-sidebar {
@@ -75,5 +102,17 @@
 
 .docs-code-panel {
   @apply w-[320px] h-screen sticky top-0 overflow-y-auto bg-docsbg p-4 shrink-0;
-  margin-left: 32px; /* Add margin between content and code panel */
+  margin-left: 32px;
+
+  .code-block {
+    @apply text-sm text-white;
+  }
+
+  pre {
+    @apply bg-gray-900 rounded-md p-4 my-2 overflow-x-auto;
+  }
+
+  code {
+    @apply font-mono text-sm;
+  }
 }
