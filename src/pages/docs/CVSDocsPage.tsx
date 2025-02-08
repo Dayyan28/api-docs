@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
@@ -67,7 +66,6 @@ const CVSDocsPage = () => {
         <div className="docs-content">
           <MarkdownRenderer 
             content={content}
-            renderJsonInline={false}
             onCodeBlockVisible={setActiveCodeExample}
           />
         </div>

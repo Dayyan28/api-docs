@@ -1,4 +1,3 @@
-
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
@@ -11,7 +10,6 @@ import type { Components } from 'react-markdown';
 interface MarkdownRendererProps {
   content: string;
   className?: string;
-  renderJsonInline?: boolean;
   onCodeBlockVisible?: (codeBlock: {
     method?: string;
     endpoint?: string;
@@ -20,55 +18,13 @@ interface MarkdownRendererProps {
   }) => void;
 }
 
-export const MarkdownRenderer = ({ 
-  content, 
-  className, 
-  renderJsonInline = true,
-  onCodeBlockVisible 
-}: MarkdownRendererProps) => {
+export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: MarkdownRendererProps) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = async (code: string, index: number) => {
     await navigator.clipboard.writeText(code);
     setCopiedIndex(index);
     setTimeout(() => setCopiedIndex(null), 2000);
-  };
-
-  // Extract technical examples from content
-  const extractTechnicalExamples = (markdown: string) => {
-    const examples: {
-      method?: string;
-      endpoint?: string;
-      request?: string;
-      response?: string;
-    }[] = [];
-
-    // Find json code blocks
-    const jsonBlocks = markdown.match(/```json([\s\S]*?)```/g) || [];
-    
-    jsonBlocks.forEach(block => {
-      const content = block.replace(/```json\n?/, '').replace(/```$/, '');
-      
-      // Extract method and endpoint
-      const methodMatch = content.match(/(?:GET|POST|PUT|DELETE)/);
-      const endpointMatch = content.match(/curl\s+"([^"]+)"/);
-      
-      // Split into request and response sections
-      const sections = content.split(/# Example |#\s*Example /);
-      const requestSection = sections.find(section => section.toLowerCase().includes('request'));
-      const responseSection = sections.find(section => section.toLowerCase().includes('response'));
-
-      if (methodMatch || endpointMatch || requestSection || responseSection) {
-        examples.push({
-          method: methodMatch ? methodMatch[0] : undefined,
-          endpoint: endpointMatch ? endpointMatch[1] : undefined,
-          request: requestSection ? requestSection.trim() : undefined,
-          response: responseSection ? responseSection.trim() : undefined
-        });
-      }
-    });
-
-    return examples;
   };
 
   const components: Components = {
@@ -85,21 +41,27 @@ export const MarkdownRenderer = ({
       if (!inline && match) {
         const codeContent = String(children);
         
-        // Handle JSON blocks based on renderJsonInline prop
-        if (match[1] === 'json') {
-          const examples = extractTechnicalExamples(codeContent);
-          
-          if (examples.length > 0 && onCodeBlockVisible) {
-            useEffect(() => {
-              onCodeBlockVisible(examples[0]);
-            }, []);
+        // Extract method from the first line that contains GET, POST, PUT, or DELETE
+        const methodMatch = codeContent.match(/(?:GET|POST|PUT|DELETE)/);
+        
+        // Extract endpoint from the URL in the curl command
+        const endpointMatch = codeContent.match(/curl\s+"([^"]+)"/);
+        
+        // Extract request and response sections
+        const sections = codeContent.split(/# Example |#\s*Example /);
+        const requestSection = sections.find(section => section.toLowerCase().includes('request'));
+        const responseSection = sections.find(section => section.toLowerCase().includes('response'));
+
+        useEffect(() => {
+          if (onCodeBlockVisible && (methodMatch || endpointMatch || requestSection || responseSection)) {
+            onCodeBlockVisible({
+              method: methodMatch ? methodMatch[0] : undefined,
+              endpoint: endpointMatch ? endpointMatch[1] : undefined,
+              request: requestSection ? requestSection.trim() : undefined,
+              response: responseSection ? responseSection.trim() : undefined
+            });
           }
-          
-          // Only render JSON if renderJsonInline is true
-          if (!renderJsonInline) {
-            return null;
-          }
-        }
+        }, []);
 
         return (
           <div className="relative my-4">
@@ -132,40 +94,7 @@ export const MarkdownRenderer = ({
           {children}
         </code>
       );
-    },
-    // Add specific heading styles
-    h1: ({ children }) => (
-      <h1 className="text-3xl font-bold mb-6 mt-8">{children}</h1>
-    ),
-    h2: ({ children }) => (
-      <h2 className="text-2xl font-semibold mb-4 mt-6">{children}</h2>
-    ),
-    h3: ({ children }) => (
-      <h3 className="text-xl font-medium mb-3 mt-4">{children}</h3>
-    ),
-    // Add table styles
-    table: ({ children }) => (
-      <div className="overflow-x-auto my-6">
-        <table className="min-w-full divide-y divide-gray-200">
-          {children}
-        </table>
-      </div>
-    ),
-    thead: ({ children }) => (
-      <thead className="bg-gray-50">
-        {children}
-      </thead>
-    ),
-    th: ({ children }) => (
-      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        {children}
-      </th>
-    ),
-    td: ({ children }) => (
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {children}
-      </td>
-    ),
+    }
   };
 
   return (
