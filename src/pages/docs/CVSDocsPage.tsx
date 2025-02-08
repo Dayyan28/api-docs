@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
@@ -67,6 +68,7 @@ const CVSDocsPage = () => {
           <MarkdownRenderer 
             content={content}
             onCodeBlockVisible={setActiveCodeExample}
+            isCodePanel={false}
           />
         </div>
 
@@ -74,13 +76,18 @@ const CVSDocsPage = () => {
           <div className="rounded-lg bg-docsbg p-4 h-full">
             <h3 className="text-sm font-semibold mb-2 text-white">Code Example</h3>
             {activeCodeExample ? (
-              <CodeBlock
-                method={activeCodeExample.method || ''}
-                endpoint={activeCodeExample.endpoint || ''}
-                request={activeCodeExample.request}
-                response={activeCodeExample.response}
-                isVisible={true}
-              />
+              <>
+                <CodeBlock
+                  method={activeCodeExample.method || ''}
+                  endpoint={activeCodeExample.endpoint || ''}
+                  request={activeCodeExample.request}
+                  response={activeCodeExample.response}
+                  isVisible={true}
+                />
+                <div className="mt-4 text-sm text-gray-400">
+                  <p>This example shows the complete request and response structure for the API endpoint.</p>
+                </div>
+              </>
             ) : (
               <p className="text-gray-400 text-sm">
                 Scroll through the documentation to see code examples here

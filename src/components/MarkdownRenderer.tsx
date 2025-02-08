@@ -1,3 +1,4 @@
+
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
@@ -16,9 +17,15 @@ interface MarkdownRendererProps {
     request?: string;
     response?: string;
   }) => void;
+  isCodePanel?: boolean;
 }
 
-export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: MarkdownRendererProps) => {
+export const MarkdownRenderer = ({ 
+  content, 
+  className, 
+  onCodeBlockVisible,
+  isCodePanel = false 
+}: MarkdownRendererProps) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = async (code: string, index: number) => {
@@ -37,31 +44,48 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: Mar
     }) {
       const match = /language-(\w+)/.exec(className || '');
       const codeIndex = Math.random();
+      const codeContent = String(children);
 
       if (!inline && match) {
-        const codeContent = String(children);
+        const isJsonExample = match[1] === 'json' && codeContent.includes('# Example');
         
-        // Extract method from the first line that contains GET, POST, PUT, or DELETE
-        const methodMatch = codeContent.match(/(?:GET|POST|PUT|DELETE)/);
-        
-        // Extract endpoint from the URL in the curl command
-        const endpointMatch = codeContent.match(/curl\s+"([^"]+)"/);
-        
-        // Extract request and response sections
-        const sections = codeContent.split(/# Example |#\s*Example /);
-        const requestSection = sections.find(section => section.toLowerCase().includes('request'));
-        const responseSection = sections.find(section => section.toLowerCase().includes('response'));
+        // Only process code examples in the appropriate panel
+        if (isJsonExample && !isCodePanel) {
+          // Extract method and endpoint
+          const methodMatch = codeContent.match(/(?:GET|POST|PUT|DELETE)/);
+          const endpointMatch = codeContent.match(/curl\s+"([^"]+)"/);
+          
+          // Extract request and response sections
+          const sections = codeContent.split(/# Example |#\s*Example /);
+          const requestSection = sections.find(section => 
+            section.toLowerCase().includes('request')
+          );
+          const responseSection = sections.find(section => 
+            section.toLowerCase().includes('response')
+          );
 
-        useEffect(() => {
-          if (onCodeBlockVisible && (methodMatch || endpointMatch || requestSection || responseSection)) {
+          if (onCodeBlockVisible) {
             onCodeBlockVisible({
               method: methodMatch ? methodMatch[0] : undefined,
               endpoint: endpointMatch ? endpointMatch[1] : undefined,
-              request: requestSection ? requestSection.trim() : undefined,
-              response: responseSection ? responseSection.trim() : undefined
+              request: requestSection?.trim(),
+              response: responseSection?.trim()
             });
           }
-        }, []);
+
+          // Add a reference to code panel
+          return (
+            <div className="my-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <p className="text-gray-600 mb-2">
+                See the code example panel for the complete request and response structure.
+              </p>
+              <p className="text-sm text-gray-500">
+                {methodMatch && <span className="font-mono text-green-600">{methodMatch[0]}</span>}
+                {endpointMatch && <span className="ml-2 font-mono">{endpointMatch[1]}</span>}
+              </p>
+            </div>
+          );
+        }
 
         return (
           <div className="relative my-4">
