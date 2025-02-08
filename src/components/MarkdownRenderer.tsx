@@ -11,6 +11,7 @@ import type { Components } from 'react-markdown';
 interface MarkdownRendererProps {
   content: string;
   className?: string;
+  renderJsonInline?: boolean;
   onCodeBlockVisible?: (codeBlock: {
     method?: string;
     endpoint?: string;
@@ -19,7 +20,12 @@ interface MarkdownRendererProps {
   }) => void;
 }
 
-export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: MarkdownRendererProps) => {
+export const MarkdownRenderer = ({ 
+  content, 
+  className, 
+  renderJsonInline = true,
+  onCodeBlockVisible 
+}: MarkdownRendererProps) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = async (code: string, index: number) => {
@@ -79,7 +85,7 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: Mar
       if (!inline && match) {
         const codeContent = String(children);
         
-        // Don't render JSON blocks in the middle column
+        // Handle JSON blocks based on renderJsonInline prop
         if (match[1] === 'json') {
           const examples = extractTechnicalExamples(codeContent);
           
@@ -89,7 +95,10 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: Mar
             }, []);
           }
           
-          return null; // Skip rendering JSON blocks
+          // Only render JSON if renderJsonInline is true
+          if (!renderJsonInline) {
+            return null;
+          }
         }
 
         return (
