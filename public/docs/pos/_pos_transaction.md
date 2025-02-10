@@ -1,107 +1,103 @@
+
 ## Transaction API
 
 ### Create Transaction
 
 This endpoint handles the creation of new transactions.
 
+```curl
+POST https://rad2.wigroup.co:8181/wigroup-transactionengine/pos-providers/transaction
+```
+
+# Example Transaction Request
+
 ```json
 {
-    "type": "PAYMENT",
-    "switchTrxId": "TRX123",
-    "totalAmount": 10000,
-    "basketAmount": 10000,
-    "cashbackAmount": 0,
-    "tipAmount": 0,
-    "billAmount": 10000,
-    "products": [
-        {
-            "id": "PROD001",
-            "units": 2,
-            "pricePerUnit": 5000
-        }
-    ],
     "token": {
         "id": "1234567",
-        "type": "WICODE",
-        "payload": "SAMPLE_PAYLOAD"
+        "type": "WICODE"
     },
     "storeTrxDetails": {
-        "storeId": 1050,
-        "remoteStoreId": "STORE123",
         "retailerId": 999,
-        "basketId": "BASKET123",
-        "trxId": "TRX123",
-        "posId": "POS001",
-        "cashierId": "CASH001",
-        "billId": 12345,
-        "posBillId": "BILL123"
-    }
+        "storeId": 1050,
+        "basketId": "basket1",
+        "cashierId": "cashier1",
+        "posId": "workstation1",
+        "trxId": 12345
+    },
+    "product": [
+        {
+            "id": "coffee1",
+            "pricePerUnit": 5000,
+            "units": 1
+        },
+        {
+            "id": "coffee2",
+            "pricePerUnit": 5000,
+            "units": 1
+        }
+    ],
+    "type": "PAYMENT",
+    "basketAmount": 10000,
+    "billAmount": 10000,
+    "totalAmount": 10000
 }
 ```
 
-> Example request
-
-```json
-curl -X POST "https://rad2.wigroup.co:8181/wigroup-transactionengine/pos-providers/transaction"
-  -H "Content-Type: application/json"
-  -H "id: <#apiId#>"
-  -H "password: <#apiPassword#>"
-  -H "apiClientVersion: <#version#>"
-  -H "apiServerVersion: <#version#>"
-  -d {
-    "type": "PAYMENT",
-    "switchTrxId": "TRX123",
-    "totalAmount": 10000,
-    "basketAmount": 10000,
-    "cashbackAmount": 0,
-    "tipAmount": 0,
-    "billAmount": 10000,
-    "products": [
-        {
-            "id": "PROD001",
-            "units": 2,
-            "pricePerUnit": 5000
-        }
-    ],
-    "token": {
-        "id": "1234567",
-        "type": "WICODE",
-        "payload": "SAMPLE_PAYLOAD"
-    },
-    "storeTrxDetails": {
-        "storeId": 1050,
-        "remoteStoreId": "STORE123",
-        "retailerId": 999,
-        "basketId": "BASKET123",
-        "trxId": "TRX123",
-        "posId": "POS001",
-        "cashierId": "CASH001",
-        "billId": 12345,
-        "posBillId": "BILL123"
-    }
-  }
-```
-
-> Example response
+# Example Transaction Response
 
 ```json
 {
-    "responseCode": "-1",
-    "responseDesc": "Success",
-    "wiTrxId": 87153,
+    "token": {
+        "id": "1234567",
+        "type": "WICODE"
+    },
+    "type": "PAYMENT",
+    "storeTrxDetails": {
+        "storeId": 1050,
+        "remoteStoreId": "10501",
+        "retailerId": 999,
+        "basketId": "basket1",
+        "trxId": "12345",
+        "posId": "workstation1",
+        "cashierId": "cashier1"
+    },
+    "wiTrxId": 431711,
     "totalAmountProcessed": 10000,
     "basketAmountProcessed": 10000,
+    "cashbackAmountProcessed": 0,
     "tipAmountProcessed": 0,
-    "amountToSettle": 10000,
+    "amountToSettle": 0,
+    "billAmount": 10000,
     "vsp": {
-        "id": 50099,
-        "name": "Sample VSP",
-        "trxId": "TRX123",
+        "id": 20016,
+        "name": "wiCoupon",
+        "trxId": "569023",
         "responseCode": "-1",
-        "responseDesc": "Transaction successful!"
+        "responseDesc": "Success",
+        "vspRef": "CVS_20230606150456819_Grant Test"
     },
-    "discount": [],
-    "loyalty": []
+    "discount": [
+        {
+            "name": "API Voucher Documentation",
+            "amount": 10000,
+            "product": []
+        }
+    ],
+    "loyalty": [],
+    "balance": [],
+    "redemptions": [
+        {
+            "description": "API Voucher Documentation",
+            "processedAmount": 10000,
+            "settleAmount": 0,
+            "type": "VOUCHER",
+            "vspId": 20016,
+            "wiVspTrxId": 658779
+        }
+    ],
+    "responseCode": "-1",
+    "responseDesc": "Success"
 }
 ```
 
@@ -109,20 +105,23 @@ curl -X POST "https://rad2.wigroup.co:8181/wigroup-transactionengine/pos-provide
 
 Parameter | Type | Required | Description
 --------- | ---- | -------- | -----------
-type | String | Yes | Transaction type (e.g., "PAYMENT", "REFUND")
-switchTrxId | String | Yes | Unique transaction identifier
-totalAmount | Integer | Yes | Total transaction amount in cents
-basketAmount | Integer | Yes | Total basket amount in cents
-products | Array | No | List of products in the transaction
-token | Object | Yes | Token information for the transaction
+token | Object | Yes | Token information with ID and type
 storeTrxDetails | Object | Yes | Store and transaction details
+product | Array | Yes | List of products in the transaction
+type | String | Yes | Transaction type (e.g., "PAYMENT")
+basketAmount | Number | Yes | Total basket amount in cents
+billAmount | Number | Yes | Total bill amount in cents
+totalAmount | Number | Yes | Total transaction amount in cents
 
 ### Response Parameters
 
 Parameter | Type | Description
 --------- | ---- | -----------
-responseCode | String | "-1" for success, other codes indicate failure
+wiTrxId | Number | Unique transaction ID
+totalAmountProcessed | Number | Total amount processed in cents
+basketAmountProcessed | Number | Basket amount processed in cents
+vsp | Object | VSP details including response codes
+discount | Array | List of applied discounts
+redemptions | Array | List of redemptions processed
+responseCode | String | Transaction response code
 responseDesc | String | Human-readable response description
-wiTrxId | Integer | Unique transaction ID in the Yoyo system
-totalAmountProcessed | Integer | Total amount processed in cents
-vsp | Object | VSP-specific transaction details
