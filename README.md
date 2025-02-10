@@ -1,3 +1,4 @@
+
 # Welcome to your Lovable project
 
 ## Project info
@@ -29,12 +30,22 @@ git clone <YOUR_GIT_URL>
 # Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Clear npm cache and remove node_modules (if they exist)
+npm cache clean --force
+rm -rf node_modules
+rm -rf package-lock.json
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Install the necessary dependencies with a clean slate
+npm install
+
+# Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
+
+If you encounter any issues with `npm run dev`, try these troubleshooting steps:
+1. Make sure you have Node.js version 16 or higher installed (`node -v`)
+2. Try removing node_modules and package-lock.json, then run `npm install` again
+3. If the error persists, try installing vite globally: `npm install -g vite`
 
 **Edit a file directly in GitHub**
 
@@ -52,7 +63,7 @@ npm run dev
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with:
 
 - Vite
 - TypeScript
