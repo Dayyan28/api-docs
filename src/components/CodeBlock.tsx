@@ -25,6 +25,18 @@ export const CodeBlock = ({ method, endpoint, request, response, isVisible }: Co
     }
   }, [isVisible]);
 
+  const formatJSON = (jsonString?: string) => {
+    if (!jsonString) return '';
+    try {
+      // If it's already a JSON string, parse and re-stringify it
+      const parsed = JSON.parse(jsonString);
+      return JSON.stringify(parsed, null, 2);
+    } catch {
+      // If it's not valid JSON, return the original string
+      return jsonString;
+    }
+  };
+
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text);
     setCopied(true);
@@ -37,8 +49,8 @@ export const CodeBlock = ({ method, endpoint, request, response, isVisible }: Co
   };
 
   const getAllContent = () => {
-    return `${method} ${endpoint}\n\n${request ? `Request:\n${request}\n\n` : ''}${
-      response ? `Response:\n${response}` : ''
+    return `${method} ${endpoint}\n\n${request ? `Request:\n${formatJSON(request)}\n\n` : ''}${
+      response ? `Response:\n${formatJSON(response)}` : ''
     }`;
   };
 
@@ -65,18 +77,18 @@ export const CodeBlock = ({ method, endpoint, request, response, isVisible }: Co
       
       {request && (
         <div className="mb-6">
-          <div className="text-gray-400 mb-2 font-semibold">Transaction Request</div>
+          <div className="text-gray-400 mb-2 font-semibold">Request</div>
           <pre className="bg-gray-900 p-4 rounded overflow-x-auto">
-            <code className="text-white font-mono whitespace-pre-wrap">{request}</code>
+            <code className="text-white font-mono whitespace-pre-wrap">{formatJSON(request)}</code>
           </pre>
         </div>
       )}
       
       {response && (
         <div>
-          <div className="text-gray-400 mb-2 font-semibold">Transaction Response</div>
+          <div className="text-gray-400 mb-2 font-semibold">Response</div>
           <pre className="bg-gray-900 p-4 rounded overflow-x-auto">
-            <code className="text-white font-mono whitespace-pre-wrap">{response}</code>
+            <code className="text-white font-mono whitespace-pre-wrap">{formatJSON(response)}</code>
           </pre>
         </div>
       )}
