@@ -75,10 +75,8 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible, isLoa
       if (!inline && match) {
         const codeContent = String(children);
         
-        // Extract method from the first line that contains GET, POST, PUT, or DELETE
+        // Extract method and endpoint
         const methodMatch = codeContent.match(/(?:GET|POST|PUT|DELETE)/);
-        
-        // Extract endpoint from the URL in the curl command
         const endpointMatch = codeContent.match(/curl\s+"([^"]+)"|^(https?:\/\/[^\s]+)/m);
         
         // Extract request and response sections
@@ -95,25 +93,23 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible, isLoa
             section.toLowerCase().includes('response')
           );
         } else if (codeContent.includes('{')) {
-          // If there's no explicit request/response marking but there's JSON
           requestSection = codeContent;
         }
 
-        if (onCodeBlockVisible && (methodMatch || endpointMatch || requestSection || responseSection)) {
-          onCodeBlockVisible({
-            method: methodMatch ? methodMatch[0] : undefined,
-            endpoint: endpointMatch ? (endpointMatch[1] || endpointMatch[2]) : undefined,
-            request: requestSection ? requestSection.trim() : undefined,
-            response: responseSection ? responseSection.trim() : undefined
-          });
-          
-          return (
-            <div className="text-gray-500 italic text-sm my-4">
-              See code example in the right panel
-            </div>
-          );
+        // If this looks like an API example, send it to the right panel
+        if (methodMatch || endpointMatch || requestSection || responseSection) {
+          if (onCodeBlockVisible) {
+            onCodeBlockVisible({
+              method: methodMatch ? methodMatch[0] : undefined,
+              endpoint: endpointMatch ? (endpointMatch[1] || endpointMatch[2]) : undefined,
+              request: requestSection ? requestSection.trim() : undefined,
+              response: responseSection ? responseSection.trim() : undefined
+            });
+          }
+          return null; // Don't render anything in the main content
         }
 
+        // For non-API code examples, render them in the main content
         return (
           <div className="relative my-4">
             <div className="relative bg-codebg rounded-lg overflow-hidden">
@@ -146,7 +142,6 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible, isLoa
         </code>
       );
     },
-    // Add feedback section after each h2 heading
     h2({ children }) {
       const sectionId = String(children).toLowerCase().replace(/\s+/g, '-');
       return (
