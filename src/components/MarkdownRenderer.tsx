@@ -1,3 +1,4 @@
+
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
@@ -45,23 +46,41 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: Mar
         const methodMatch = codeContent.match(/(?:GET|POST|PUT|DELETE)/);
         
         // Extract endpoint from the URL in the curl command
-        const endpointMatch = codeContent.match(/curl\s+"([^"]+)"/);
+        const endpointMatch = codeContent.match(/curl\s+"([^"]+)"|^(https?:\/\/[^\s]+)/m);
         
         // Extract request and response sections
-        const sections = codeContent.split(/# Example |#\s*Example /);
-        const requestSection = sections.find(section => section.toLowerCase().includes('request'));
-        const responseSection = sections.find(section => section.toLowerCase().includes('response'));
+        let requestSection = '';
+        let responseSection = '';
 
-        useEffect(() => {
-          if (onCodeBlockVisible && (methodMatch || endpointMatch || requestSection || responseSection)) {
-            onCodeBlockVisible({
-              method: methodMatch ? methodMatch[0] : undefined,
-              endpoint: endpointMatch ? endpointMatch[1] : undefined,
-              request: requestSection ? requestSection.trim() : undefined,
-              response: responseSection ? responseSection.trim() : undefined
-            });
-          }
-        }, []);
+        if (codeContent.includes('# Example')) {
+          const sections = codeContent.split(/# Example |#\s*Example /);
+          requestSection = sections.find(section => 
+            section.toLowerCase().includes('request') || 
+            (!section.toLowerCase().includes('response') && section.includes('{'))
+          );
+          responseSection = sections.find(section => 
+            section.toLowerCase().includes('response')
+          );
+        } else if (codeContent.includes('{')) {
+          // If there's no explicit request/response marking but there's JSON
+          requestSection = codeContent;
+        }
+
+        if (onCodeBlockVisible && (methodMatch || endpointMatch || requestSection || responseSection)) {
+          onCodeBlockVisible({
+            method: methodMatch ? methodMatch[0] : undefined,
+            endpoint: endpointMatch ? (endpointMatch[1] || endpointMatch[2]) : undefined,
+            request: requestSection ? requestSection.trim() : undefined,
+            response: responseSection ? responseSection.trim() : undefined
+          });
+          
+          // Return a placeholder for the main content
+          return (
+            <div className="text-gray-500 italic text-sm my-4">
+              See code example in the right panel
+            </div>
+          );
+        }
 
         return (
           <div className="relative my-4">

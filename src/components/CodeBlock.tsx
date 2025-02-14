@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 
 interface CodeBlockProps {
@@ -28,19 +29,21 @@ export const CodeBlock = ({ method, endpoint, request, response, isVisible }: Co
         <span className="text-green-400">{method}</span>{' '}
         <span className="text-white">{endpoint}</span>
       </div>
+      
       {request && (
-        <div className="mb-4">
-          <div className="text-gray-400 mb-2">Request</div>
-          <pre className="bg-gray-900 p-4 rounded">
-            <code className="text-white">{request}</code>
+        <div className="mb-6">
+          <div className="text-gray-400 mb-2 font-semibold">Transaction Request</div>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto">
+            <code className="text-white whitespace-pre-wrap">{request}</code>
           </pre>
         </div>
       )}
+      
       {response && (
         <div>
-          <div className="text-gray-400 mb-2">Response</div>
-          <pre className="bg-gray-900 p-4 rounded">
-            <code className="text-white">{response}</code>
+          <div className="text-gray-400 mb-2 font-semibold">Transaction Response</div>
+          <pre className="bg-gray-900 p-4 rounded overflow-x-auto">
+            <code className="text-white whitespace-pre-wrap">{response}</code>
           </pre>
         </div>
       )}
