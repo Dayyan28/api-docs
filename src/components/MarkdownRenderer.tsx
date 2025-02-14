@@ -4,9 +4,11 @@ import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils';
-import { Copy } from 'lucide-react';
+import { Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import type { Components } from 'react-markdown';
+import { Skeleton } from './ui/skeleton';
+import { useToast } from "@/hooks/use-toast";
 
 interface MarkdownRendererProps {
   content: string;
@@ -17,16 +19,47 @@ interface MarkdownRendererProps {
     request?: string;
     response?: string;
   }) => void;
+  isLoading?: boolean;
 }
 
-export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: MarkdownRendererProps) => {
+export const MarkdownRenderer = ({ content, className, onCodeBlockVisible, isLoading }: MarkdownRendererProps) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [feedbackGiven, setFeedbackGiven] = useState<{ [key: string]: boolean }>({});
+  const { toast } = useToast();
 
   const handleCopy = async (code: string, index: number) => {
     await navigator.clipboard.writeText(code);
     setCopiedIndex(index);
+    toast({
+      title: "Copied!",
+      description: "Code copied to clipboard",
+      duration: 2000,
+    });
     setTimeout(() => setCopiedIndex(null), 2000);
   };
+
+  const handleFeedback = (type: 'up' | 'down', sectionId: string) => {
+    if (!feedbackGiven[sectionId]) {
+      setFeedbackGiven(prev => ({ ...prev, [sectionId]: true }));
+      toast({
+        title: "Thank you for your feedback!",
+        description: "Your feedback helps us improve our documentation.",
+        duration: 3000,
+      });
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 p-6">
+        <Skeleton className="h-8 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+        <Skeleton className="h-32 w-full" />
+        <Skeleton className="h-4 w-4/6" />
+      </div>
+    );
+  }
 
   const components: Components = {
     code({ node, inline, className, children, ...props }: {
@@ -74,7 +107,6 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: Mar
             response: responseSection ? responseSection.trim() : undefined
           });
           
-          // Return a placeholder for the main content
           return (
             <div className="text-gray-500 italic text-sm my-4">
               See code example in the right panel
@@ -109,16 +141,50 @@ export const MarkdownRenderer = ({ content, className, onCodeBlockVisible }: Mar
       }
 
       return (
-        <code className={cn("bg-codebg text-codefg px-2 py-1 rounded", className)} {...props}>
+        <code className={cn("bg-codebg text-codefg px-2 py-1 rounded font-mono", className)} {...props}>
           {children}
         </code>
+      );
+    },
+    // Add feedback section after each h2 heading
+    h2({ children }) {
+      const sectionId = String(children).toLowerCase().replace(/\s+/g, '-');
+      return (
+        <div className="mb-8">
+          <h2 id={sectionId} className="scroll-mt-20 text-2xl font-bold mb-4">
+            {children}
+          </h2>
+          <div className="flex items-center space-x-4 mt-4 text-sm text-gray-500">
+            <span>Was this section helpful?</span>
+            <button
+              onClick={() => handleFeedback('up', sectionId)}
+              className={cn(
+                "p-2 rounded-full hover:bg-gray-100 transition-colors",
+                feedbackGiven[sectionId] && "text-green-500"
+              )}
+              aria-label="Yes, this was helpful"
+            >
+              <ThumbsUp size={16} />
+            </button>
+            <button
+              onClick={() => handleFeedback('down', sectionId)}
+              className={cn(
+                "p-2 rounded-full hover:bg-gray-100 transition-colors",
+                feedbackGiven[sectionId] && "text-red-500"
+              )}
+              aria-label="No, this wasn't helpful"
+            >
+              <ThumbsDown size={16} />
+            </button>
+          </div>
+        </div>
       );
     }
   };
 
   return (
     <ReactMarkdown
-      className={cn('docs-content', className)}
+      className={cn('docs-content prose prose-slate dark:prose-invert max-w-none', className)}
       rehypePlugins={[rehypeRaw, rehypeHighlight]}
       remarkPlugins={[remarkGfm]}
       components={components}
