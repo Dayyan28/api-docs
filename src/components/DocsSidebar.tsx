@@ -93,8 +93,8 @@ export const DocsSidebar = ({ docType, activeSection, onSectionClick }: DocsSide
             className={cn(
               "w-full text-left px-4 py-2 text-sm transition-colors rounded-md",
               activeSection === item.id 
-                ? "text-primary-orange bg-secondary-cream font-medium"
-                : "text-gray-600 hover:text-primary-dark-teal hover:bg-gray-50"
+                ? "bg-primary-orange/10 text-primary-orange font-medium"
+                : "text-gray-600 hover:text-primary-orange hover:bg-primary-orange/5"
             )}
           >
             {item.title}
