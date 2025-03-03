@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { ChevronDown, ChevronRight, Search, Menu } from 'lucide-react';
+import { ChevronDown, ChevronRight, Search, Menu, X } from 'lucide-react';
 import { getNavigationByType } from '@/config/navigation';
 import { Input } from './ui/input';
 import { cn } from '@/lib/utils';
@@ -10,6 +10,8 @@ export interface DocsSidebarProps {
   docType: string;
   activeSection: string;
   onSectionClick: (sectionId: string) => void;
+  isSidebarOpen?: boolean;
+  toggleSidebar?: () => void;
 }
 
 interface NavItem {
@@ -18,10 +20,15 @@ interface NavItem {
   children?: NavItem[];
 }
 
-export const DocsSidebar = ({ docType, activeSection, onSectionClick }: DocsSidebarProps) => {
+export const DocsSidebar = ({ 
+  docType, 
+  activeSection, 
+  onSectionClick,
+  isSidebarOpen = true,
+  toggleSidebar
+}: DocsSidebarProps) => {
   const [expanded, setExpanded] = useState<string[]>(['overview']);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const navigation = getNavigationByType(docType);
   const isMobile = useIsMobile();
 
@@ -108,41 +115,45 @@ export const DocsSidebar = ({ docType, activeSection, onSectionClick }: DocsSide
     <>
       {isMobile && (
         <button
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          onClick={toggleSidebar}
           className="fixed bottom-4 right-4 z-50 p-4 bg-primary-dark-teal text-white rounded-full shadow-lg"
           aria-label="Toggle sidebar"
         >
-          <Menu className="w-6 h-6" />
+          {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       )}
       
-      <nav className={cn(
-        "w-64 h-screen overflow-y-auto px-4 py-6 border-r border-gray-200 bg-white transition-all duration-300",
-        isMobile && !isSidebarOpen && "-translate-x-full",
-        isMobile && "fixed left-0 top-0 z-40"
+      <aside className={cn(
+        "docs-sidebar transition-all duration-300 ease-in-out",
+        isMobile && !isSidebarOpen ? "-translate-x-full fixed" : "translate-x-0",
+        isMobile ? "fixed left-0 top-0 z-40" : ""
       )}>
-        <div className="mb-8">
-          <h1 className="text-xl font-bold text-primary-dark-teal mb-1">
-            {docType.toUpperCase()} Documentation
-          </h1>
-          <p className="text-sm text-gray-600">v1.0.0</p>
-        </div>
+        <div className="px-4 py-6">
+          <div className="mb-8">
+            <h1 className="text-xl font-bold text-primary-dark-teal mb-1">
+              {docType.toUpperCase()} Documentation
+            </h1>
+            <p className="text-sm text-gray-600">v1.0.0</p>
+          </div>
 
-        <div className="mb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              type="search"
-              placeholder="Search documentation..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 bg-gray-50"
-            />
+          <div className="mb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                type="search"
+                placeholder="Search documentation..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 bg-gray-50"
+              />
+            </div>
+          </div>
+
+          <div className="overflow-y-auto">
+            {renderNavItems(navigation)}
           </div>
         </div>
-
-        {renderNavItems(navigation)}
-      </nav>
+      </aside>
     </>
   );
 };

@@ -4,16 +4,21 @@ import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { loadMarkdownFile } from '@/utils/markdown';
 import { CodeBlock } from '@/components/CodeBlock';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 const LoyaltyDocsPage = () => {
   const [activeSection, setActiveSection] = useState('overview');
   const [content, setContent] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCodeExample, setActiveCodeExample] = useState<{
     method?: string;
     endpoint?: string;
     request?: string;
     response?: string;
   } | null>(null);
+  
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const loadContent = async () => {
@@ -32,25 +37,40 @@ const LoyaltyDocsPage = () => {
     };
 
     loadContent();
-  }, []);
+    
+    // Set sidebar open state based on screen size
+    setIsSidebarOpen(!isMobile);
+  }, [isMobile]);
 
   const handleSectionClick = (sectionId: string) => {
     setActiveSection(sectionId);
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className={cn(
+      "flex min-h-screen bg-white relative",
+      isMobile && isSidebarOpen && "mobile-sidebar-open"
+    )}>
       <DocsSidebar 
         docType="loyalty"
         activeSection={activeSection}
         onSectionClick={handleSectionClick}
+        isSidebarOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
       />
       
-      <main className="flex-1 flex">
+      <main className="flex-1 flex flex-col md:flex-row">
         <div className="docs-content">
           <MarkdownRenderer 
             content={content}

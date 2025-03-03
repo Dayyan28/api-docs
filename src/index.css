@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
@@ -64,9 +65,22 @@
 }
 
 .docs-content {
-  @apply prose max-w-none overflow-y-auto h-[calc(100vh-2rem)] px-8 py-6;
-  width: calc(100vw - 16rem - 33.33%); /* 16rem (256px) for sidebar, 33.33% for code panel */
-  flex: 1;
+  @apply prose max-w-none overflow-y-auto px-8 py-6;
+  height: calc(100vh - 2rem);
+  width: calc(100% - 16rem - 33.33%);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .docs-content {
+    width: calc(100% - 33.33%);
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-sidebar-open .docs-content {
+    margin-left: 16rem;
+  }
 }
 
 .docs-sidebar {
