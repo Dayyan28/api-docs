@@ -37,39 +37,28 @@ const VSPDocsPage = () => {
     loadContent();
   }, []);
 
-  const handleCodeBlockVisible = (codeBlock: {
-    method?: string;
-    endpoint?: string;
-    request?: string;
-    response?: string;
-  }) => {
-    setActiveCodeExample(codeBlock);
+  const handleSectionClick = (sectionId: string) => {
+    setActiveSection(sectionId);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="flex">
-        <div className="w-64 h-screen sticky top-0 overflow-y-auto border-r border-gray-200">
-          <DocsSidebar 
-            docType="vsp"
-            activeSection={activeSection}
-            onSectionClick={(sectionId) => {
-              setActiveSection(sectionId);
-              const element = document.getElementById(sectionId);
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
+    <div className="flex min-h-screen bg-white">
+      <DocsSidebar 
+        docType="vsp"
+        activeSection={activeSection}
+        onSectionClick={handleSectionClick}
+      />
+      
+      <main className="flex-1 flex">
+        <div className="docs-content">
+          <MarkdownRenderer 
+            content={content}
+            onCodeBlockVisible={activeCodeExample => setActiveCodeExample(activeCodeExample)}
           />
-        </div>
-
-        <div className="flex-1 px-8 py-6">
-          <div className="prose prose-black max-w-none">
-            <MarkdownRenderer 
-              content={content} 
-              onCodeBlockVisible={handleCodeBlockVisible}
-            />
-          </div>
         </div>
 
         <div className="w-1/3 h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4">
@@ -90,7 +79,7 @@ const VSPDocsPage = () => {
             )}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

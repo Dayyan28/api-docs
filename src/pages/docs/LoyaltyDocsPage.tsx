@@ -43,12 +43,13 @@ const LoyaltyDocsPage = () => {
   };
 
   return (
-    <div className="flex bg-white min-h-screen">
+    <div className="flex min-h-screen bg-white">
       <DocsSidebar 
         docType="loyalty"
-        activeSection={activeSection} 
-        onSectionClick={handleSectionClick} 
+        activeSection={activeSection}
+        onSectionClick={handleSectionClick}
       />
+      
       <main className="flex-1 flex">
         <div className="docs-content">
           <MarkdownRenderer 

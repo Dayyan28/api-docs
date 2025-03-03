@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
@@ -65,10 +66,11 @@
 
 .docs-content {
   @apply prose max-w-none overflow-y-auto h-[calc(100vh-2rem)] px-8 py-6;
-  width: calc(100vw - 64px - 33.33%); /* 64px for sidebar, 33.33% for code panel */
+  width: calc(100vw - 16rem - 33.33%); /* 16rem (256px) for sidebar, 33.33% for code panel */
   flex: 1;
 }
 
 .docs-sidebar {
-  @apply w-64 h-screen sticky top-0 overflow-y-auto border-r border-gray-200 bg-white shrink-0;
+  @apply w-64 h-screen sticky top-0 overflow-y-auto border-r border-gray-200 bg-white shrink-0 z-10;
 }
+

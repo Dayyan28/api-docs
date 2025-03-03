@@ -43,7 +43,7 @@ const EcommerceDocsPage = () => {
   };
 
   return (
-    <div className="flex bg-white min-h-screen">
+    <div className="flex min-h-screen bg-white">
       <DocsSidebar 
         docType="ecommerce"
         activeSection={activeSection}
