@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
@@ -43,39 +44,39 @@ const EarnDocsPage = () => {
 
   return (
     <div className="flex bg-white min-h-screen">
-      <div className="docs-sidebar">
-        <DocsSidebar 
-          docType="earn"
-          activeSection={activeSection}
-          onSectionClick={handleSectionClick}
-        />
-      </div>
+      <DocsSidebar 
+        docType="earn"
+        activeSection={activeSection}
+        onSectionClick={handleSectionClick}
+      />
       
-      <div className="docs-content">
-        <MarkdownRenderer 
-          content={content}
-          onCodeBlockVisible={setActiveCodeExample}
-        />
-      </div>
-
-      <div className="docs-code-panel">
-        <div className="rounded-lg bg-gray-100 p-4">
-          <h3 className="text-sm font-semibold mb-2">Code Example</h3>
-          {activeCodeExample ? (
-            <CodeBlock
-              method={activeCodeExample.method || ''}
-              endpoint={activeCodeExample.endpoint || ''}
-              request={activeCodeExample.request}
-              response={activeCodeExample.response}
-              isVisible={true}
-            />
-          ) : (
-            <p className="text-gray-500 text-sm">
-              Scroll through the documentation to see code examples here
-            </p>
-          )}
+      <main className="flex-1 flex">
+        <div className="docs-content">
+          <MarkdownRenderer 
+            content={content}
+            onCodeBlockVisible={setActiveCodeExample}
+          />
         </div>
-      </div>
+
+        <div className="w-1/3 h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4">
+          <div className="rounded-lg bg-gray-100 p-4">
+            <h3 className="text-sm font-semibold mb-2">Code Example</h3>
+            {activeCodeExample ? (
+              <CodeBlock
+                method={activeCodeExample.method || ''}
+                endpoint={activeCodeExample.endpoint || ''}
+                request={activeCodeExample.request}
+                response={activeCodeExample.response}
+                isVisible={true}
+              />
+            ) : (
+              <p className="text-gray-500 text-sm">
+                Scroll through the documentation to see code examples here
+              </p>
+            )}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
