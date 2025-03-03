@@ -70,15 +70,17 @@ const EarnDocsPage = () => {
         toggleSidebar={toggleSidebar}
       />
       
-      <main className="flex-1 flex flex-col md:flex-row">
-        <div className="docs-content">
-          <MarkdownRenderer 
-            content={content}
-            onCodeBlockVisible={setActiveCodeExample}
-          />
+      <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+        <div className="flex-1 overflow-auto">
+          <div className="docs-content">
+            <MarkdownRenderer 
+              content={content}
+              onCodeBlockVisible={setActiveCodeExample}
+            />
+          </div>
         </div>
 
-        <div className="w-1/3 h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4">
+        <div className="w-1/3 h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4 border-l border-gray-200">
           <div className="rounded-lg bg-gray-100 p-4">
             <h3 className="text-sm font-semibold mb-2">Code Example</h3>
             {activeCodeExample ? (

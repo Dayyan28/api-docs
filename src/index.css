@@ -67,13 +67,13 @@
 .docs-content {
   @apply prose max-w-none overflow-y-auto px-8 py-6;
   height: calc(100vh - 2rem);
-  width: calc(100% - 16rem - 33.33%);
+  width: 100%; /* Updated from calc(100% - 16rem - 33.33%) to full width */
 }
 
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   .docs-content {
-    width: calc(100% - 33.33%);
+    width: 100%; /* Updated for consistent width on mobile */
     padding-left: 1rem;
     padding-right: 1rem;
   }

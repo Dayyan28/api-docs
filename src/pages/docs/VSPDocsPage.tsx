@@ -4,16 +4,21 @@ import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { loadMarkdownFile } from '@/utils/markdown';
 import { DocsSidebar } from '@/components/DocsSidebar';
 import { CodeBlock } from '@/components/CodeBlock';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 const VSPDocsPage = () => {
   const [content, setContent] = useState('');
   const [activeSection, setActiveSection] = useState('overview');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCodeExample, setActiveCodeExample] = useState<{
     method?: string;
     endpoint?: string;
     request?: string;
     response?: string;
   } | null>(null);
+  
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const loadContent = async () => {
@@ -35,33 +40,50 @@ const VSPDocsPage = () => {
     };
 
     loadContent();
-  }, []);
+    
+    // Set sidebar open state based on screen size
+    setIsSidebarOpen(!isMobile);
+  }, [isMobile]);
 
   const handleSectionClick = (sectionId: string) => {
     setActiveSection(sectionId);
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className={cn(
+      "flex min-h-screen bg-white relative",
+      isMobile && isSidebarOpen && "mobile-sidebar-open"
+    )}>
       <DocsSidebar 
         docType="vsp"
         activeSection={activeSection}
         onSectionClick={handleSectionClick}
+        isSidebarOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
       />
       
-      <main className="flex-1 flex">
-        <div className="docs-content">
-          <MarkdownRenderer 
-            content={content}
-            onCodeBlockVisible={activeCodeExample => setActiveCodeExample(activeCodeExample)}
-          />
+      <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+        <div className="flex-1 overflow-auto">
+          <div className="docs-content">
+            <MarkdownRenderer 
+              content={content}
+              onCodeBlockVisible={setActiveCodeExample}
+            />
+          </div>
         </div>
 
-        <div className="w-1/3 h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4">
+        <div className="w-1/3 h-screen sticky top-0 overflow-y-auto bg-gray-50 p-4 border-l border-gray-200">
           <div className="rounded-lg bg-gray-100 p-4">
             <h3 className="text-sm font-semibold mb-2">Code Example</h3>
             {activeCodeExample ? (
